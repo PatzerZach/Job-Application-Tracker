@@ -1,2 +1,8 @@
+from dataclasses import dataclass
+
+@dataclass
 class CoverLetter:
-    pass
+    cover_letter_id: int
+    user_id: int
+    cover_letter_name: str
+    file_path: str
