@@ -4,16 +4,16 @@ class ApplicationController:
     def __init__(self, application_service):
         self.application_service = application_service
 
-    def create_application(self, user_id, job_title, job_company=None, job_name=None, job_description=None, job_phone=None, 
-                           job_email=None, resume_id=None, cover_letter_id=None):
+    def create_application(self, user_id, date_applied, job_title, job_company=None, job_name=None, job_description=None, job_phone=None, 
+                           job_email=None, resume_id=None, cover_letter_id=None, job_notes=None):
         return self.application_service.create_application(
-            user_id, job_title, job_company, job_name, job_description, job_phone, job_email, resume_id, cover_letter_id
+            user_id, date_applied, job_title, job_company, job_name, job_description, job_phone, job_email, resume_id, cover_letter_id, job_notes
         )
         
     def update_application(self, app_id, user_id, job_title=None, job_company=None, job_name=None, job_description=None, job_phone=None,
-                           job_email=None, resume_id=None, cover_letter_id=None, job_status=None):
+                           job_email=None, resume_id=None, cover_letter_id=None, job_status=None, job_notes=None, date_applied=None):
         return self.application_service.update_application(
-            app_id, user_id, job_title, job_company, job_name, job_description, job_phone, job_email, resume_id, cover_letter_id, job_status
+            app_id, user_id, job_title, job_company, job_name, job_description, job_phone, job_email, resume_id, cover_letter_id, job_status, job_notes, date_applied
         )
         
     def delete_application(self, app_id, user_id):

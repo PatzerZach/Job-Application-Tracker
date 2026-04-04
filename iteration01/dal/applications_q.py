@@ -9,10 +9,12 @@ ALLOWED_APPLICATION_UPDATE_COLUMNS = {
     "job_email",
     "resume_fk",
     "cover_letter_fk",
-    "job_status"
+    "job_status",
+    "job_notes",
+    "date_applied"
 }
 
-def create_application(conn, user_fk, job_title, job_company=None, job_name=None, job_description=None, job_phone=None, job_email=None, resume_fk=None, cover_letter_fk=None, job_status=None):
+def create_application(conn, user_fk, date_applied, job_title, job_company=None, job_name=None, job_description=None, job_phone=None, job_email=None, resume_fk=None, cover_letter_fk=None, job_status=None, job_notes=None):
     cur = conn.execute(
         """
         INSERT INTO applications (
@@ -25,11 +27,13 @@ def create_application(conn, user_fk, job_title, job_company=None, job_name=None
             job_email,
             resume_fk,
             cover_letter_fk,
-            job_status
+            job_status,
+            job_notes,
+            date_applied
         )
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """,
-        (user_fk, job_title, job_company, job_name, job_description, job_phone, job_email, resume_fk, cover_letter_fk, job_status)
+        (user_fk, job_title, job_company, job_name, job_description, job_phone, job_email, resume_fk, cover_letter_fk, job_status, job_notes, date_applied)
     )
     return cur.lastrowid
 

@@ -7,10 +7,13 @@ class ApplicationService:
     def __init__(self, db_path):
         self.db_path = db_path
 
-    def create_application(self, user_id, job_title, job_company=None, job_name=None, job_description=None, job_phone=None,
-                           job_email=None, resume_id=None, cover_letter_id=None):
+    def create_application(self, user_id, date_applied, job_title, job_company=None, job_name=None, job_description=None, job_phone=None,
+                           job_email=None, resume_id=None, cover_letter_id=None, job_notes=None):
         if not job_title:
-            raise ValueError("job_title is required")
+            raise ValueError("Job Title is required")
+        
+        if not date_applied:
+            raise ValueError("Date Applied required")
 
         # Grabbing the integer value of NOT_APPLIED from the enum which is 0
         status = ApplicationStatus.NOT_APPLIED.value
@@ -19,6 +22,7 @@ class ApplicationService:
             return create_application(
                 conn=conn,
                 user_fk=user_id,
+                date_applied=date_applied,
                 job_title=job_title,
                 job_company=job_company,
                 job_name=job_name,
@@ -27,11 +31,12 @@ class ApplicationService:
                 job_email=job_email,
                 resume_fk=resume_id,
                 cover_letter_fk=cover_letter_id,
-                job_status=status
+                job_status=status,
+                job_notes=job_notes
             )
 
     def update_application(self, app_id, user_id, job_title=None, job_company=None, job_name=None, job_description=None, job_phone=None,
-                           job_email=None, resume_fk=None, cover_letter_fk=None, job_status=None):
+                           job_email=None, resume_fk=None, cover_letter_fk=None, job_status=None, job_notes=None, date_applied=None):
         updates = {}
 
         field_map = {
@@ -42,7 +47,9 @@ class ApplicationService:
             "job_phone" : job_phone,
             "job_email" : job_email,
             "resume_fk" : resume_fk,
-            "cover_letter_fk" : cover_letter_fk
+            "cover_letter_fk" : cover_letter_fk,
+            "job_notes" : job_notes,
+            "date_applied" : date_applied
         }
         
         for field, value in field_map.items():
@@ -82,6 +89,8 @@ class ApplicationService:
                 resume_id=row["resume_fk"],
                 cover_letter_id=row["cover_letter_fk"],
                 job_status=ApplicationStatus(row["job_status"]),
+                job_notes=row["job_notes"],
+                date_applied=row["date_applied"]
         )
 
 

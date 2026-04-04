@@ -14,3 +14,6 @@ class JobApplication:
     resume_id: int
     cover_letter_id: int
     job_status: ApplicationStatus
+    job_notes: str
+    date_applied: str # TODO: str for now because sqlite doesnt have datetime
+    # but when I switch to postgres, change to datetime
