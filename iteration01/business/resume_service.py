@@ -50,7 +50,7 @@ class ResumeService:
         stored_path = self.storage_service.upload_file(bucket_name="resumes", storage_path=storage_path, file_bytes=file_bytes, content_type=content_type)
         
         with connect(self.db_path) as conn:
-            resume_id = self.create_resume(
+            resume_id = create_resume(
                 conn=conn, 
                 user_id=user_id,
                 resume_name=safe_resume_name,
@@ -66,7 +66,7 @@ class ResumeService:
             raise ValueError("User_id and resume_id are required")
         
         with connect(self.db_path) as conn:
-            row = self.get_resume(conn, user_id, resume_id)
+            row = get_resume(conn, user_id, resume_id)
             
         if row is None:
             return None
@@ -105,7 +105,7 @@ class ResumeService:
             raise ValueError("User_id and Resume_id are required")
         
         with connect(self.db_path) as conn:
-            row = self.get_resume(conn, user_id, resume_id)
+            row = get_resume(conn, user_id, resume_id)
             
             if row is None:
                 raise ValueError("Resume not found")
