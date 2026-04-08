@@ -15,3 +15,6 @@ class ResumeController:
 
     def delete_resume(self, user_id, resume_id):
         return self.resume_service.delete_resume(user_id, resume_id)
+    
+    def get_resume_download_url(self, user_id, resume_id, expires_in=3600):
+        return self.resume_service.get_resume_download_url(user_id, resume_id, expires_in)

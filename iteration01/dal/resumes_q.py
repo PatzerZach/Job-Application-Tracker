@@ -34,7 +34,7 @@ def list_resumes_by_user(conn, user_id, limit=50, offset=0, sort="id", direction
         (user_id, limit, offset)
     ).fetchall()
 
-def delete_resume(conn, resume_id, user_id):
+def delete_resume(conn, user_id, resume_id):
     cur = conn.execute(
         "DELETE FROM resumes WHERE id = ? AND user_fk = ?",
         (resume_id, user_id)
