@@ -1,6 +1,6 @@
 from supabase import create_client
 
-class SupbaseStorageService:
+class SupabaseStorageService:
     def __init__(self, supabase_url, supabase_key):
         if not supabase_url or not supabase_key:
             raise ValueError("Supabase URL and key are required")
