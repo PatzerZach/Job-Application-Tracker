@@ -15,7 +15,8 @@ ALLOWED_APPLICATION_UPDATE_COLUMNS = {
 }
 
 def create_application(conn, user_fk, date_applied, job_title, job_company=None, job_name=None, job_description=None, job_phone=None, job_email=None, resume_fk=None, cover_letter_fk=None, job_status=None, job_notes=None):
-    cur = conn.execute(
+    
+    return conn.execute(
         """
         INSERT INTO applications (
             user_fk,
@@ -29,13 +30,14 @@ def create_application(conn, user_fk, date_applied, job_title, job_company=None,
             cover_letter_fk,
             job_status,
             job_notes,
-            date_applied
+            date_applied,
+            created_date
         )
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, CURRENT_DATE)
+        RETURNING id
         """,
         (user_fk, job_title, job_company, job_name, job_description, job_phone, job_email, resume_fk, cover_letter_fk, job_status, job_notes, date_applied)
-    )
-    return cur.lastrowid
+    ).fetchone()
 
 
 def update_application(conn, app_id, user_id, updates):
@@ -46,14 +48,14 @@ def update_application(conn, app_id, user_id, updates):
     if invalid_cols:
         raise ValueError(f"Invalid update columns: {invalid_cols}")
     
-    set_clause=", ".join(f"{column} = ?" for column in updates.keys())
+    set_clause=", ".join(f"{column} = %s" for column in updates.keys())
     values = list(updates.values())
     
     cur = conn.execute(
         f"""
         UPDATE applications
         SET {set_clause}
-        WHERE id = ? AND user_fk = ?
+        WHERE id = %s AND user_fk = %s
         """,
         (*values, app_id, user_id)
     )
@@ -63,31 +65,34 @@ def update_application(conn, app_id, user_id, updates):
 
 def get_application(conn, app_id):
     return conn.execute(
-        "SELECT * FROM applications WHERE id = ?",
+        "SELECT * FROM applications WHERE id = %s",
         (app_id,)
     ).fetchone()
 
-def get_application_detail(conn, app_id):
-    # join to show the resume and cover letter info for this application
-    return conn.execute(
-        """
-        SELECT
-          a.id AS application_id,
-          a.job_name,
-          a.user_fk,
-          r.id AS resume_id,
-          r.resume_name,
-          r.file_path AS resume_file_path,
-          c.id AS cover_letter_id,
-          c.cover_letter_name,
-          c.file_path AS cover_file_path
-        FROM applications a
-        JOIN resumes r ON r.id = a.resume_fk
-        LEFT JOIN cover_letters c ON c.id = a.cover_letter_fk
-        WHERE a.id = ?
-        """,
-        (app_id,)
-    ).fetchone()
+
+# Not Needed for onw
+
+# def get_application_detail(conn, app_id):
+#     # join to show the resume and cover letter info for this application
+#     return conn.execute(
+#         """
+#         SELECT
+#           a.id AS application_id,
+#           a.job_name,
+#           a.user_fk,
+#           r.id AS resume_id,
+#           r.resume_name,
+#           r.file_path AS resume_file_path,
+#           c.id AS cover_letter_id,
+#           c.cover_letter_name,
+#           c.file_path AS cover_file_path
+#         FROM applications a
+#         JOIN resumes r ON r.id = a.resume_fk
+#         LEFT JOIN cover_letters c ON c.id = a.cover_letter_fk
+#         WHERE a.id = %s
+#         """,
+#         (app_id,)
+#     ).fetchone()
 
 def list_applications_by_user(conn, user_id, limit=50, offset=0, sort="id", direction="DESC"):
     sort, direction = safe_order_by(sort, direction, allowed_cols={"id", "job_name"})
@@ -96,16 +101,16 @@ def list_applications_by_user(conn, user_id, limit=50, offset=0, sort="id", dire
         f"""
         SELECT *
         FROM applications
-        WHERE user_fk = ?
+        WHERE user_fk = %s
         ORDER BY {sort} {direction}
-        LIMIT ? OFFSET ?
+        LIMIT %s OFFSET %s
         """,
         (user_id, limit, offset)
     ).fetchall()
 
 def delete_application(conn, app_id, user_id):
     cur = conn.execute(
-        "DELETE FROM applications WHERE id = ? AND user_fk = ?",
+        "DELETE FROM applications WHERE id = %s AND user_fk = %s",
         (app_id, user_id)
     )
     if cur.rowcount == 0:

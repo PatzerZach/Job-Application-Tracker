@@ -1,15 +1,11 @@
-import sqlite3
+import psycopg2
+from psycopg2.extras import RealDictCursor
 from contextlib import contextmanager
 
 @contextmanager
-def connect(db_path):
-    conn = sqlite3.connect(db_path)
+def connect(db_url):
+    conn = psycopg2.connect(db_url, cursor_factory=RealDictCursor)
     try:
-        conn.row_factory = sqlite3.Row
-
-        # Force foreign keys otherwise SQLite ignores foreign keys
-        conn.execute("PRAGMA foreign_keys = ON;")
-
         yield conn
         conn.commit()
     except Exception:
