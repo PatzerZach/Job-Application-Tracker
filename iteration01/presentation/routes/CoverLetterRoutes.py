@@ -106,7 +106,7 @@ def download_cover_letter(request: Request, cover_letter_id: int):
 
 
 @router.post("/cover_letters/{cover_letter_id}/delete")
-def delete_resume(request: Request, cover_letter_id: int):
+def delete_cover_letter(request: Request, cover_letter_id: int):
     user_id = get_current_user_id(request)
     if user_id is None:
         return RedirectResponse(url="/login", status_code=303)

@@ -10,11 +10,11 @@ class CoverLetterController:
     def list_cover_letters(self, user_id):
         return self.cover_letter_service.list_cover_letters(user_id)
 
-    def get_cover_letter(self, user_id, resume_id):
-        return self.cover_letter_service.get_cover_letter(user_id, resume_id)
+    def get_cover_letter(self, user_id, cover_letter_id):
+        return self.cover_letter_service.get_cover_letter(user_id, cover_letter_id)
 
-    def delete_resume(self, user_id, resume_id):
-        return self.cover_letter_service.delete_resume(user_id, resume_id)
+    def delete_cover_letter(self, user_id, cover_letter_id):
+        return self.cover_letter_service.delete_cover_letter(user_id, cover_letter_id)
 
-    def get_cover_letter_download_url(self, user_id, resume_id, expires_in=3600):
-        return self.cover_letter_service.get_cover_letter_download_url(user_id, resume_id, expires_in)
+    def get_cover_letter_download_url(self, user_id, cover_letter_id, expires_in=3600):
+        return self.cover_letter_service.get_cover_letter_download_url(user_id, cover_letter_id, expires_in)

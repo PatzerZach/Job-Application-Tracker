@@ -25,7 +25,7 @@ class CoverLetterService:
             raise ValueError("User ID is required")
 
         if not cover_letter_name or not cover_letter_name.strip():
-            raise ValueError("Resume name is required")
+            raise ValueError("Cover Letter name is required")
 
         if not file_bytes:
             raise ValueError("Uploaded file is required")
