@@ -35,21 +35,21 @@ def build_document_viewer_payload(request: Request, content_url: str, download_u
         return {
             "viewer_mode": "pdf",
             "viewer_src": f"{content_url}#toolbar=0&navpanes=0&zoom=page-fit",
-            "viewer_note": "Rendered directly in AppTrackr for an in-browser review experience."
+            "viewer_note": "Rendered directly in AppsTrackr for an in-browser review experience."
         }
 
     if normalized_type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
         return {
             "viewer_mode": "docx",
             "viewer_src": content_url,
-            "viewer_note": "Rendered directly inside AppTrackr using a DOCX browser renderer."
+            "viewer_note": "Rendered directly inside AppsTrackr using a DOCX browser renderer."
         }
 
     if normalized_type == "application/msword" and is_public_remote:
         return {
             "viewer_mode": "office",
             "viewer_src": f"https://view.officeapps.live.com/op/embed.aspx?src={quote(absolute_url, safe='')}",
-            "viewer_note": "Rendered inside AppTrackr using Microsoft Office Web Viewer for classic Word document support."
+            "viewer_note": "Rendered inside AppsTrackr using Microsoft Office Web Viewer for classic Word document support."
         }
 
     return {

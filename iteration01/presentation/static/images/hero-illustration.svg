@@ -76,7 +76,7 @@
   <!-- Logo in sidebar -->
   <rect x="62" y="38" width="26" height="26" rx="6" fill="url(#gold-grad)" filter="url(#glow-gold)"/>
   <path d="M68 44h8M68 51h14M68 58h10" stroke="#0a0a12" stroke-width="2" stroke-linecap="round"/>
-  <text x="94" y="56" font-family="system-ui" font-size="10.5" font-weight="700" fill="#eeedf0" letter-spacing="-0.45">AppTrackr</text>
+  <text x="94" y="56" font-family="system-ui" font-size="10.5" font-weight="700" fill="#eeedf0" letter-spacing="-0.45">AppsTrackr</text>
 
   <!-- Sidebar nav items -->
   <!-- Active item -->
