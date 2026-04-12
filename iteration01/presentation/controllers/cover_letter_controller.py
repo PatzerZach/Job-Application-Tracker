@@ -18,3 +18,6 @@ class CoverLetterController:
 
     def get_cover_letter_download_url(self, user_id, cover_letter_id, expires_in=3600):
         return self.cover_letter_service.get_cover_letter_download_url(user_id, cover_letter_id, expires_in)
+
+    def get_cover_letter_file(self, user_id, cover_letter_id):
+        return self.cover_letter_service.get_cover_letter_file(user_id, cover_letter_id)

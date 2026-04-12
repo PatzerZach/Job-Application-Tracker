@@ -19,3 +19,9 @@ class LocalStorageService:
 
     def create_signed_url(self, bucket_name, storage_path, expires_in=3600):
         return f"/local-file/{bucket_name}/{storage_path}"
+
+    def download_file(self, bucket_name, storage_path):
+        file_path = self.base_dir / bucket_name / storage_path
+        if not file_path.exists():
+            raise ValueError("Stored file was not found")
+        return file_path.read_bytes()

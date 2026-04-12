@@ -70,6 +70,8 @@ def build_app():
     # Inject controllers into route modules
     auth_routes.auth_controller = auth_controller
     application_routes.application_controller = application_controller
+    application_routes.resume_controller = resume_controller
+    application_routes.cover_letter_controller = cover_letter_controller
     resume_routes.resume_controller = resume_controller
     cover_letter_routes.cover_letter_controller = cover_letter_controller
 

@@ -111,3 +111,20 @@ class CoverLetterService:
                 raise ValueError("Cover Letter not found")
 
             return self.storage_service.create_signed_url(bucket_name="cover_letters", storage_path=row["storage_path"], expires_in=expires_in)
+
+    def get_cover_letter_file(self, user_id, cover_letter_id):
+        if not user_id or not cover_letter_id:
+            raise ValueError("User_id and Cover_letter_id are required")
+
+        with connect(self.db_path) as conn:
+            row = get_cover_letter(conn, user_id, cover_letter_id)
+
+            if row is None:
+                raise ValueError("Cover Letter not found")
+
+        return {
+            "cover_letter": self._row_to_cover_letter(row),
+            "file_bytes": self.storage_service.download_file(bucket_name="cover_letters", storage_path=row["storage_path"]),
+            "content_type": row["content_type"] or "application/octet-stream",
+            "original_filename": row["original_filename"] or row["cover_letter_name"] or "cover-letter",
+        }

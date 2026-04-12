@@ -111,3 +111,20 @@ class ResumeService:
                 raise ValueError("Resume not found")
             
             return self.storage_service.create_signed_url(bucket_name="resumes", storage_path=row["storage_path"], expires_in=expires_in)
+
+    def get_resume_file(self, user_id, resume_id):
+        if not user_id or not resume_id:
+            raise ValueError("User_id and Resume_id are required")
+
+        with connect(self.db_path) as conn:
+            row = get_resume(conn, user_id, resume_id)
+
+            if row is None:
+                raise ValueError("Resume not found")
+
+        return {
+            "resume": self._row_to_resume(row),
+            "file_bytes": self.storage_service.download_file(bucket_name="resumes", storage_path=row["storage_path"]),
+            "content_type": row["content_type"] or "application/octet-stream",
+            "original_filename": row["original_filename"] or row["resume_name"] or "resume",
+        }

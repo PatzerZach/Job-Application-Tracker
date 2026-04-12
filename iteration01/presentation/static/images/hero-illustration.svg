@@ -1,0 +1,251 @@
+<svg viewBox="0 0 560 460" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg-grad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#13132a"/>
+      <stop offset="100%" stop-color="#0a0a16"/>
+    </linearGradient>
+    <linearGradient id="gold-grad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f0c84a"/>
+      <stop offset="100%" stop-color="#c9a82a"/>
+    </linearGradient>
+    <linearGradient id="card-grad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1e1e3a"/>
+      <stop offset="100%" stop-color="#13132a"/>
+    </linearGradient>
+    <linearGradient id="sidebar-grad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f0f1e"/>
+      <stop offset="100%" stop-color="#07070d"/>
+    </linearGradient>
+    <linearGradient id="bar1" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#f0c84a" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#f0c84a"/>
+    </linearGradient>
+    <linearGradient id="bar2" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#22d3ee" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#22d3ee"/>
+    </linearGradient>
+    <linearGradient id="bar3" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#4ade80" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#4ade80"/>
+    </linearGradient>
+    <linearGradient id="bar4" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#a78bfa" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#a78bfa"/>
+    </linearGradient>
+    <filter id="glow-gold">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="soft-shadow">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="rgba(0,0,0,0.6)"/>
+    </filter>
+    <filter id="glow-green">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <clipPath id="card-clip">
+      <rect x="48" y="24" width="464" height="412" rx="16"/>
+    </clipPath>
+  </defs>
+
+  <!-- Main card shell -->
+  <rect x="48" y="24" width="464" height="412" rx="16" fill="url(#bg-grad)" filter="url(#soft-shadow)"/>
+  <rect x="48" y="24" width="464" height="412" rx="16" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+
+  <!-- Grid lines background -->
+  <g clip-path="url(#card-clip)" opacity="0.12">
+    <line x1="48" y1="80" x2="512" y2="80" stroke="#ffffff" stroke-width="0.5"/>
+    <line x1="48" y1="136" x2="512" y2="136" stroke="#ffffff" stroke-width="0.5"/>
+    <line x1="48" y1="192" x2="512" y2="192" stroke="#ffffff" stroke-width="0.5"/>
+    <line x1="48" y1="248" x2="512" y2="248" stroke="#ffffff" stroke-width="0.5"/>
+    <line x1="48" y1="304" x2="512" y2="304" stroke="#ffffff" stroke-width="0.5"/>
+    <line x1="48" y1="360" x2="512" y2="360" stroke="#ffffff" stroke-width="0.5"/>
+    <line x1="160" y1="24" x2="160" y2="436" stroke="#ffffff" stroke-width="0.5"/>
+    <line x1="272" y1="24" x2="272" y2="436" stroke="#ffffff" stroke-width="0.5"/>
+    <line x1="384" y1="24" x2="384" y2="436" stroke="#ffffff" stroke-width="0.5"/>
+  </g>
+
+  <!-- Sidebar -->
+  <rect x="48" y="24" width="120" height="412" rx="0" fill="url(#sidebar-grad)"/>
+  <rect x="48" y="24" width="120" height="412" rx="0" fill="none"/>
+  <line x1="168" y1="24" x2="168" y2="436" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+
+  <!-- Sidebar top glow -->
+  <ellipse cx="108" cy="60" rx="60" ry="30" fill="#f0c84a" opacity="0.06"/>
+
+  <!-- Logo in sidebar -->
+  <rect x="62" y="38" width="26" height="26" rx="6" fill="url(#gold-grad)" filter="url(#glow-gold)"/>
+  <path d="M68 44h8M68 51h14M68 58h10" stroke="#0a0a12" stroke-width="2" stroke-linecap="round"/>
+  <text x="96" y="56" font-family="system-ui" font-size="11" font-weight="700" fill="#eeedf0" letter-spacing="-0.5">Trackr</text>
+
+  <!-- Sidebar nav items -->
+  <!-- Active item -->
+  <rect x="56" y="80" width="104" height="28" rx="6" fill="rgba(240,200,74,0.1)"/>
+  <rect x="56" y="80" width="3" height="28" rx="2" fill="#f0c84a"/>
+  <rect x="68" y="90" width="8" height="8" rx="2" fill="#f0c84a" opacity="0.8"/>
+  <rect x="82" y="92" width="40" height="4" rx="2" fill="#f0c84a" opacity="0.7"/>
+
+  <!-- Other items -->
+  <rect x="68" y="122" width="8" height="8" rx="2" fill="rgba(255,255,255,0.2)"/>
+  <rect x="82" y="124" width="36" height="4" rx="2" fill="rgba(255,255,255,0.15)"/>
+  <rect x="68" y="146" width="8" height="8" rx="2" fill="rgba(255,255,255,0.2)"/>
+  <rect x="82" y="148" width="44" height="4" rx="2" fill="rgba(255,255,255,0.15)"/>
+  <rect x="68" y="170" width="8" height="8" rx="2" fill="rgba(255,255,255,0.2)"/>
+  <rect x="82" y="172" width="32" height="4" rx="2" fill="rgba(255,255,255,0.15)"/>
+
+  <!-- Sidebar user avatar at bottom -->
+  <rect x="62" y="392" width="26" height="26" rx="6" fill="url(#gold-grad)" opacity="0.9"/>
+  <text x="68" y="409" font-family="system-ui" font-size="10" font-weight="800" fill="#0a0a12">AJ</text>
+  <rect x="94" y="396" width="40" height="5" rx="2" fill="rgba(255,255,255,0.4)"/>
+  <rect x="94" y="405" width="28" height="3" rx="1" fill="rgba(255,255,255,0.15)"/>
+
+  <!-- Top bar -->
+  <rect x="168" y="24" width="344" height="44" fill="rgba(255,255,255,0.02)"/>
+  <line x1="168" y1="68" x2="512" y2="68" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+
+  <!-- Breadcrumb -->
+  <rect x="180" y="36" width="36" height="5" rx="2" fill="rgba(255,255,255,0.2)"/>
+  <text x="221" y="42" font-family="system-ui" font-size="9" fill="rgba(255,255,255,0.25)">/</text>
+  <rect x="228" y="36" width="60" height="5" rx="2" fill="rgba(255,255,255,0.5)"/>
+
+  <!-- Add button in topbar -->
+  <rect x="454" y="32" width="50" height="22" rx="6" fill="url(#gold-grad)" filter="url(#glow-gold)"/>
+  <path d="M472 43h14M479 36v14" stroke="#0a0a12" stroke-width="1.5" stroke-linecap="round"/>
+  <rect x="468" y="36" width="1" height="1" fill="none"/>
+
+  <!-- Page title area -->
+  <rect x="180" y="84" width="100" height="10" rx="3" fill="rgba(255,255,255,0.7)"/>
+  <rect x="180" y="100" width="64" height="4" rx="2" fill="rgba(255,255,255,0.2)"/>
+
+  <!-- ── Stats row ── -->
+  <!-- Stat 1 -->
+  <rect x="180" y="118" width="72" height="56" rx="8" fill="url(#card-grad)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+  <rect x="188" y="128" width="28" height="3" rx="1" fill="rgba(255,255,255,0.25)"/>
+  <text x="188" y="157" font-family="system-ui" font-size="18" font-weight="800" fill="#eeedf0" letter-spacing="-1">12</text>
+
+  <!-- Stat 2 -->
+  <rect x="260" y="118" width="72" height="56" rx="8" fill="url(#card-grad)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+  <rect x="268" y="128" width="32" height="3" rx="1" fill="rgba(255,255,255,0.25)"/>
+  <text x="268" y="157" font-family="system-ui" font-size="18" font-weight="800" fill="#f0c84a" filter="url(#glow-gold)" letter-spacing="-1">7</text>
+
+  <!-- Stat 3 -->
+  <rect x="340" y="118" width="72" height="56" rx="8" fill="url(#card-grad)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+  <rect x="348" y="128" width="36" height="3" rx="1" fill="rgba(255,255,255,0.25)"/>
+  <text x="348" y="157" font-family="system-ui" font-size="18" font-weight="800" fill="#22d3ee" letter-spacing="-1">3</text>
+
+  <!-- Stat 4 -->
+  <rect x="420" y="118" width="72" height="56" rx="8" fill="url(#card-grad)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+  <rect x="428" y="128" width="24" height="3" rx="1" fill="rgba(255,255,255,0.25)"/>
+  <text x="428" y="157" font-family="system-ui" font-size="18" font-weight="800" fill="#4ade80" filter="url(#glow-green)" letter-spacing="-1">1</text>
+
+  <!-- ── Main table card ── -->
+  <rect x="180" y="186" width="312" height="178" rx="10" fill="url(#card-grad)" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+
+  <!-- Table header bg -->
+  <rect x="180" y="186" width="312" height="28" rx="10" fill="rgba(255,255,255,0.03)"/>
+  <rect x="180" y="204" width="312" height="10" fill="rgba(255,255,255,0.03)"/>
+
+  <!-- Column headers -->
+  <rect x="194" y="196" width="36" height="3" rx="1" fill="rgba(255,255,255,0.2)"/>
+  <rect x="274" y="196" width="44" height="3" rx="1" fill="rgba(255,255,255,0.2)"/>
+  <rect x="370" y="196" width="32" height="3" rx="1" fill="rgba(255,255,255,0.2)"/>
+  <rect x="450" y="196" width="24" height="3" rx="1" fill="rgba(255,255,255,0.2)"/>
+
+  <!-- Search bar in table header -->
+  <rect x="194" y="222" width="100" height="18" rx="5" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/>
+  <circle cx="204" cy="231" r="3" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+  <line x1="206.5" y1="233.5" x2="209" y2="236" stroke="rgba(255,255,255,0.25)" stroke-width="1" stroke-linecap="round"/>
+  <rect x="212" y="229" width="44" height="3" rx="1" fill="rgba(255,255,255,0.12)"/>
+
+  <!-- Row 1 -->
+  <rect x="194" y="252" width="56" height="5" rx="2" fill="rgba(255,255,255,0.65)"/>
+  <rect x="274" y="252" width="70" height="5" rx="2" fill="rgba(255,255,255,0.35)"/>
+  <!-- Applied badge -->
+  <rect x="370" y="248" width="42" height="13" rx="6" fill="rgba(96,165,250,0.15)"/>
+  <rect x="375" y="253" width="4" height="4" rx="2" fill="#60a5fa"/>
+  <rect x="382" y="252" width="22" height="4" rx="1" fill="#60a5fa" opacity="0.8"/>
+  <rect x="450" y="251" width="28" height="5" rx="2" fill="rgba(255,255,255,0.15)"/>
+
+  <line x1="180" y1="272" x2="492" y2="272" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+
+  <!-- Row 2 -->
+  <rect x="194" y="282" width="72" height="5" rx="2" fill="rgba(255,255,255,0.65)"/>
+  <rect x="274" y="282" width="58" height="5" rx="2" fill="rgba(255,255,255,0.35)"/>
+  <!-- Interview badge -->
+  <rect x="370" y="278" width="50" height="13" rx="6" fill="rgba(251,146,60,0.15)"/>
+  <rect x="375" y="283" width="4" height="4" rx="2" fill="#fb923c"/>
+  <rect x="382" y="282" width="30" height="4" rx="1" fill="#fb923c" opacity="0.8"/>
+  <rect x="450" y="281" width="28" height="5" rx="2" fill="rgba(255,255,255,0.15)"/>
+
+  <line x1="180" y1="302" x2="492" y2="302" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+
+  <!-- Row 3 -->
+  <rect x="194" y="312" width="48" height="5" rx="2" fill="rgba(255,255,255,0.65)"/>
+  <rect x="274" y="312" width="78" height="5" rx="2" fill="rgba(255,255,255,0.35)"/>
+  <!-- Offer badge -->
+  <rect x="370" y="308" width="36" height="13" rx="6" fill="rgba(74,222,128,0.15)"/>
+  <rect x="375" y="313" width="4" height="4" rx="2" fill="#4ade80"/>
+  <rect x="382" y="312" width="16" height="4" rx="1" fill="#4ade80" opacity="0.8"/>
+  <rect x="450" y="311" width="28" height="5" rx="2" fill="rgba(255,255,255,0.15)"/>
+
+  <line x1="180" y1="332" x2="492" y2="332" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+
+  <!-- Row 4 -->
+  <rect x="194" y="342" width="62" height="5" rx="2" fill="rgba(255,255,255,0.65)"/>
+  <rect x="274" y="342" width="50" height="5" rx="2" fill="rgba(255,255,255,0.35)"/>
+  <!-- Rejected badge -->
+  <rect x="370" y="338" width="44" height="13" rx="6" fill="rgba(248,113,113,0.15)"/>
+  <rect x="375" y="343" width="4" height="4" rx="2" fill="#f87171"/>
+  <rect x="382" y="342" width="24" height="4" rx="1" fill="#f87171" opacity="0.8"/>
+  <rect x="450" y="341" width="28" height="5" rx="2" fill="rgba(255,255,255,0.15)"/>
+
+  <!-- ── Mini chart card ── -->
+  <rect x="180" y="376" width="140" height="52" rx="8" fill="url(#card-grad)" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+  <rect x="192" y="386" width="44" height="3" rx="1" fill="rgba(255,255,255,0.25)"/>
+
+  <!-- Bar chart -->
+  <rect x="192" y="403" width="10" height="16" rx="2" fill="url(#bar1)"/>
+  <rect x="206" y="411" width="10" height="8" rx="2" fill="url(#bar2)"/>
+  <rect x="220" y="406" width="10" height="13" rx="2" fill="url(#bar3)"/>
+  <rect x="234" y="408" width="10" height="11" rx="2" fill="url(#bar4)"/>
+  <rect x="248" y="399" width="10" height="20" rx="2" fill="url(#bar1)" opacity="0.7"/>
+  <rect x="262" y="405" width="10" height="14" rx="2" fill="url(#bar2)" opacity="0.7"/>
+  <rect x="276" y="395" width="10" height="24" rx="2" fill="url(#bar3)" opacity="0.7"/>
+  <rect x="290" y="402" width="10" height="17" rx="2" fill="url(#bar1)"/>
+  <!-- Trend line over bars -->
+  <polyline points="197,411 211,415 225,409 239,412 253,402 267,408 281,398 295,405" fill="none" stroke="#f0c84a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.8" filter="url(#glow-gold)"/>
+  <!-- Trend dots -->
+  <circle cx="197" cy="411" r="2.5" fill="#f0c84a" filter="url(#glow-gold)"/>
+  <circle cx="253" cy="402" r="2.5" fill="#f0c84a" filter="url(#glow-gold)"/>
+  <circle cx="295" cy="405" r="2.5" fill="#f0c84a" filter="url(#glow-gold)"/>
+
+  <!-- ── Mini donut / status card ── -->
+  <rect x="332" y="376" width="160" height="52" rx="8" fill="url(#card-grad)" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+  <rect x="344" y="386" width="48" height="3" rx="1" fill="rgba(255,255,255,0.25)"/>
+
+  <!-- Status legend dots -->
+  <circle cx="348" cy="400" r="3" fill="#60a5fa"/>
+  <rect x="355" y="397" width="24" height="4" rx="2" fill="rgba(255,255,255,0.25)"/>
+  <rect x="382" y="397" width="16" height="4" rx="2" fill="rgba(96,165,250,0.7)"/>
+
+  <circle cx="348" cy="412" r="3" fill="#fb923c"/>
+  <rect x="355" y="409" width="32" height="4" rx="2" fill="rgba(255,255,255,0.25)"/>
+  <rect x="390" y="409" width="10" height="4" rx="2" fill="rgba(251,146,60,0.7)"/>
+
+  <circle cx="420" cy="400" r="3" fill="#4ade80"/>
+  <rect x="427" y="397" width="20" height="4" rx="2" fill="rgba(255,255,255,0.25)"/>
+  <rect x="450" y="397" width="14" height="4" rx="2" fill="rgba(74,222,128,0.7)"/>
+
+  <circle cx="420" cy="412" r="3" fill="#f87171"/>
+  <rect x="427" y="409" width="28" height="4" rx="2" fill="rgba(255,255,255,0.25)"/>
+  <rect x="458" y="409" width="10" height="4" rx="2" fill="rgba(248,113,113,0.7)"/>
+
+  <!-- ── Gold accent glow overlay ── -->
+  <ellipse cx="290" cy="230" rx="140" ry="80" fill="rgba(240,200,74,0.03)"/>
+
+  <!-- Top right decorative corner glow -->
+  <circle cx="490" cy="60" r="60" fill="rgba(167,139,250,0.04)"/>
+
+  <!-- Bottom left subtle glow -->
+  <circle cx="200" cy="410" r="40" fill="rgba(34,211,238,0.03)"/>
+</svg>

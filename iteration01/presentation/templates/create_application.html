@@ -1,0 +1,347 @@
+{% extends "base.html" %}
+{% block title %}Create Application{% endblock %}
+{% set active_page = 'applications' %}
+{% block head %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
+{% endblock %}
+
+{% block body %}
+<div id="scroll-progress" aria-hidden="true"></div>
+<div id="cursor-dot" aria-hidden="true"></div>
+<div id="cursor-ring" aria-hidden="true"></div>
+
+<div class="app-layout">
+  {% include '_sidebar.html' %}
+
+  <main class="app-main" id="main-content">
+    <header class="app-topbar">
+      <button class="mobile-menu-toggle" aria-label="Open menu">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5A.75.75 0 012 10z" clip-rule="evenodd"/></svg>
+      </button>
+      <div class="topbar-breadcrumb">
+        <a href="/applications">Applications</a>
+        <span class="topbar-breadcrumb-sep">/</span>
+        <span class="topbar-breadcrumb-current">Create</span>
+      </div>
+      <div class="page-actions">
+        <a href="/applications" class="btn btn-glass">
+          <svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M10 12L6 8l4-4"/></svg>
+          Back
+        </a>
+      </div>
+    </header>
+
+    <div class="page-content">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Create Application</h1>
+          <p class="page-subtitle">Add a new job application to your tracker</p>
+        </div>
+      </div>
+
+      {% if error %}
+      <div class="alert alert-error" role="alert">
+        <svg class="alert-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-5a.75.75 0 01.75.75v4.5a.75.75 0 01-1.5 0v-4.5A.75.75 0 0110 5zm0 10a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/></svg>
+        <span>{{ error }}</span>
+        <button class="alert-close" aria-label="Dismiss">x</button>
+      </div>
+      {% endif %}
+
+      <div class="page-shell-narrow page-shell-application">
+        <div class="detail-section tilt-card shimmer" data-reveal data-tilt="4.5">
+          <div class="detail-section-header">
+            <div class="detail-section-icon" aria-hidden="true"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm4 5a1 1 0 011 1v1h1a1 1 0 110 2h-1v1a1 1 0 11-2 0v-1H8a1 1 0 110-2h1V8a1 1 0 011-1z" clip-rule="evenodd"/></svg></div>
+            <span class="detail-section-title">Application Details</span>
+          </div>
+
+          <div class="detail-section-body">
+            <form method="POST" action="/applications/create" enctype="multipart/form-data" data-validate novalidate>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="date_applied">Date Applied <span style="color:var(--danger);">*</span></label>
+                  <div class="custom-date-picker" data-date-picker data-required="true">
+                    <input type="hidden" id="date_applied" name="date_applied" value="{{ date_applied or '' }}" data-date-value required>
+                    <button type="button" class="custom-date-trigger" data-date-trigger aria-haspopup="dialog" aria-expanded="false">
+                      <span class="custom-date-trigger-icon" aria-hidden="true">
+                        <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6 2a1 1 0 011 1v1h6V3a1 1 0 112 0v1h.25A2.75 2.75 0 0118 6.75v8.5A2.75 2.75 0 0115.25 18h-10.5A2.75 2.75 0 012 15.25v-8.5A2.75 2.75 0 014.75 4H5V3a1 1 0 011-1zm9.5 7h-11v6.25c0 .69.56 1.25 1.25 1.25h8.5c.69 0 1.25-.56 1.25-1.25V9z" clip-rule="evenodd"/></svg>
+                      </span>
+                      <span class="custom-date-trigger-copy">
+                        <span class="custom-date-label" data-date-label>Select a date</span>
+                        <span class="custom-date-hint">Launch cinematic calendar</span>
+                      </span>
+                    </button>
+                    <div class="custom-date-popover" data-date-popover hidden></div>
+                  </div>
+                  <span class="form-error-text">Date applied is required.</span>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="job_company">Company</label>
+                  <input class="form-control" type="text" id="job_company" name="job_company" placeholder="Acme Inc." value="{{ job_company or '' }}">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="job_title">Job Title <span style="color:var(--danger);">*</span></label>
+                <input class="form-control" type="text" id="job_title" name="job_title" placeholder="Senior Software Engineer" value="{{ job_title or '' }}" required autofocus>
+                <span class="form-error-text">Job title is required.</span>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="job_name">Contact Name</label>
+                <input class="form-control" type="text" id="job_name" name="job_name" placeholder="Hiring Manager" value="{{ job_name or '' }}">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="job_email">Contact Email</label>
+                <input class="form-control" type="email" id="job_email" name="job_email" placeholder="name@company.com" value="{{ job_email or '' }}">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="job_phone">Contact Phone</label>
+                <input class="form-control" type="text" id="job_phone" name="job_phone" placeholder="(555) 123-4567" value="{{ job_phone or '' }}">
+              </div>
+
+              <div class="location-card-glass">
+                <div class="location-card-header">
+                  <div class="detail-section-icon" aria-hidden="true"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.05 8.293a5 5 0 119.9 0c0 1.957-1.04 4.05-2.22 5.65-.59.8-1.213 1.482-1.753 1.957-.27.238-.52.432-.729.57-.196.13-.36.202-.448.202s-.252-.072-.448-.201a6.758 6.758 0 01-.729-.571 14.78 14.78 0 01-1.752-1.956C6.09 12.343 5.05 10.25 5.05 8.293zM10 10.5a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/></svg></div>
+                  <div>
+                    <div class="location-card-title">Location</div>
+                    <div class="location-card-subtitle">Search verified places or click the map, then tweak the fields if the nearest match is slightly off.</div>
+                  </div>
+                </div>
+
+                <div class="location-picker" data-location-picker>
+                  <div class="form-group">
+                    <label class="form-label" for="job_location_search">Verified Location Search</label>
+                    <div class="location-search-shell">
+                      <span class="location-search-icon" aria-hidden="true"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd"/></svg></span>
+                      <input class="form-control location-search-input" type="text" id="job_location_search" placeholder="Search a city or place..." autocomplete="off" data-location-search>
+                      <div class="location-search-results" data-location-results hidden></div>
+                    </div>
+                    <div class="field-microcopy">Search suggestions come from Geoapify. Clicking the map uses the nearest matched place.</div>
+                    {% if not geoapify_enabled %}
+                    <div class="field-microcopy" style="color:var(--warning);">Add `GEOAPIFY_API_KEY` to enable verified search and the interactive map.</div>
+                    {% endif %}
+                  </div>
+
+                  <div class="location-map-shell">
+                    <div class="location-map-toolbar">
+                      <span class="location-map-toolbar-copy">Pan, zoom, then click the map to lock the nearest location.</span>
+                      <button type="button" class="btn btn-glass btn-sm" data-location-reset>Reset View</button>
+                    </div>
+                    <div class="location-map" data-location-map data-geoapify-enabled="{{ 'true' if geoapify_enabled else 'false' }}"></div>
+                  </div>
+                </div>
+
+                <div class="form-row form-row-third">
+                  <div class="form-group">
+                    <label class="form-label" for="job_city">City</label>
+                    <input class="form-control" type="text" id="job_city" name="job_city" placeholder="Chicago" value="{{ job_city or '' }}">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="job_state">State</label>
+                    <input class="form-control" type="text" id="job_state" name="job_state" placeholder="Illinois" value="{{ job_state or '' }}">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="job_country">Country</label>
+                    <input class="form-control" type="text" id="job_country" name="job_country" placeholder="United States" value="{{ job_country or 'United States' }}">
+                  </div>
+                </div>
+              </div>
+
+              <div class="comp-card-glass">
+                <div class="location-card-header">
+                  <div class="detail-section-icon" aria-hidden="true"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a1 1 0 011 1v1.05a4.002 4.002 0 012.95 2.95H15a1 1 0 110 2h-.757c-.341 1.67-1.661 2.99-3.243 3.332V15h2a1 1 0 110 2h-2v1a1 1 0 11-2 0v-1H7a1 1 0 110-2h2v-2.668C7.418 11.99 6.098 10.67 5.757 9H5a1 1 0 110-2h1.05A4.002 4.002 0 019 4.05V3a1 1 0 011-1zm0 4a2 2 0 100 4 2 2 0 000-4z"/></svg></div>
+                  <div>
+                    <div class="location-card-title">Compensation</div>
+                    <div class="location-card-subtitle">Optional, but useful for comparing roles at a glance. Fill hourly, salary, or leave both blank.</div>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label" for="hourly_rate">Hourly Rate</label>
+                    <div class="input-prefix-wrap input-stepper-wrap" data-number-stepper>
+                      <span class="input-prefix">$</span>
+                      <input class="form-control input-with-prefix input-with-stepper" type="number" step="0.01" min="0" id="hourly_rate" name="hourly_rate" placeholder="42.50" value="{{ hourly_rate or '' }}">
+                      <div class="input-stepper-buttons">
+                        <button type="button" class="input-stepper-btn" data-step-action="up" aria-label="Increase hourly rate">
+                          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M2 7l4-4 4 4"/></svg>
+                        </button>
+                        <button type="button" class="input-stepper-btn" data-step-action="down" aria-label="Decrease hourly rate">
+                          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M2 5l4 4 4-4"/></svg>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="field-microcopy">Per hour</div>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="salary_amount">Salary</label>
+                    <div class="input-prefix-wrap input-stepper-wrap" data-number-stepper>
+                      <span class="input-prefix">$</span>
+                      <input class="form-control input-with-prefix input-with-stepper" type="number" step="0.01" min="0" id="salary_amount" name="salary_amount" placeholder="95000" value="{{ salary_amount or '' }}">
+                      <div class="input-stepper-buttons">
+                        <button type="button" class="input-stepper-btn" data-step-action="up" aria-label="Increase salary">
+                          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M2 7l4-4 4 4"/></svg>
+                        </button>
+                        <button type="button" class="input-stepper-btn" data-step-action="down" aria-label="Decrease salary">
+                          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M2 5l4 4 4-4"/></svg>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="field-microcopy">Annual base pay</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group" style="margin-bottom:0;">
+                <label class="form-label" for="job_description">Job Description</label>
+                <textarea class="form-control" id="job_description" name="job_description" rows="6" data-auto-resize placeholder="Paste the job description here...">{{ job_description or '' }}</textarea>
+              </div>
+
+              <div style="height:1px;background:var(--border);margin:var(--space-5) 0;"></div>
+              <div class="document-stack">
+                <section class="document-composer shimmer" data-document-picker data-document-kind="resume" data-required="true">
+                  <div class="document-composer-header">
+                    <div>
+                      <h3 class="document-composer-title">Resume</h3>
+                      <p class="document-composer-subtitle">Required for every application. Reuse one you already uploaded or stage a fresh file right here.</p>
+                    </div>
+                    <span class="document-composer-badge">Required</span>
+                  </div>
+
+                  <div class="document-mode-switch" role="tablist" aria-label="Resume source">
+                    <label class="document-mode-pill">
+                      <input type="radio" name="resume_mode" value="existing" {% if (resume_mode or 'existing') != 'upload' %}checked{% endif %} data-document-mode>
+                      <span>Use Existing</span>
+                    </label>
+                    <label class="document-mode-pill">
+                      <input type="radio" name="resume_mode" value="upload" {% if (resume_mode or '') == 'upload' %}checked{% endif %} data-document-mode>
+                      <span>Upload New</span>
+                    </label>
+                  </div>
+
+                  <div class="document-panel {% if (resume_mode or 'existing') != 'upload' %}is-active{% endif %}" data-document-panel="existing">
+                    <div class="form-group" style="margin-bottom:0;">
+                      <label class="form-label" for="resume_fk">Choose a Stored Resume</label>
+                      <select class="form-control" id="resume_fk" name="resume_fk" data-document-existing>
+                        <option value="">Select a resume...</option>
+                        {% for resume in resumes %}
+                        <option value="{{ resume.resume_id }}" {% if resume_fk and resume_fk|string == resume.resume_id|string %}selected{% endif %}>{{ resume.resume_name }}</option>
+                        {% endfor %}
+                      </select>
+                      <span class="form-error-text" data-document-error>{% if not resumes %}Upload a resume below to continue.{% else %}Choose an existing resume or upload a new one.{% endif %}</span>
+                    </div>
+                    {% if resumes %}
+                    <div class="field-microcopy">{{ resumes|length }} stored resume{{ 's' if resumes|length != 1 else '' }} ready to attach.</div>
+                    {% else %}
+                    <div class="field-microcopy">No resumes uploaded yet. Switch to <strong>Upload New</strong> to attach one now.</div>
+                    {% endif %}
+                  </div>
+
+                  <div class="document-panel {% if (resume_mode or '') == 'upload' %}is-active{% endif %}" data-document-panel="upload">
+                    <div class="form-row">
+                      <div class="form-group">
+                        <label class="form-label" for="resume_name">Resume Name</label>
+                        <input class="form-control" type="text" id="resume_name" name="resume_name" value="{{ resume_name or '' }}" placeholder="2026 SWE Resume" data-document-name>
+                        <div class="field-microcopy">We’ll auto-fill this from the file name if you leave it blank.</div>
+                      </div>
+                    </div>
+                    <div class="form-group" style="margin-bottom:0;">
+                      <label class="form-label" for="resume_file">Resume File</label>
+                      <div class="file-upload-area" role="button" tabindex="0" aria-label="Upload resume. Click or drag and drop.">
+                        <input type="file" id="resume_file" name="resume_file" accept=".pdf,.doc,.docx" data-document-file/>
+                        <div class="file-upload-icon" aria-hidden="true">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4"/><path d="m7 9 5-5 5 5"/><path d="M20 16.5a3.5 3.5 0 0 1-3.5 3.5h-9A3.5 3.5 0 0 1 4 16.5"/></svg>
+                        </div>
+                        <span class="file-upload-label">Drop a resume here, or <span class="file-upload-accent">browse</span></span>
+                        <span class="file-upload-hint">PDF, DOC, or DOCX</span>
+                      </div>
+                      <div class="file-selected" style="display:none;">
+                        <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd"/></svg>
+                        <span class="file-selected-name">resume.pdf</span>
+                      </div>
+                      <span class="form-error-text" data-document-error>Upload a resume file or switch back to an existing one.</span>
+                    </div>
+                  </div>
+                </section>
+
+                <section class="document-composer shimmer" data-document-picker data-document-kind="cover-letter">
+                  <div class="document-composer-header">
+                    <div>
+                      <h3 class="document-composer-title">Cover Letter</h3>
+                      <p class="document-composer-subtitle">Optional. Attach one from your library or upload it inline to keep the whole application flow in one place.</p>
+                    </div>
+                    <span class="document-composer-badge document-composer-badge-soft">Optional</span>
+                  </div>
+
+                  <div class="document-mode-switch" role="tablist" aria-label="Cover letter source">
+                    <label class="document-mode-pill">
+                      <input type="radio" name="cover_letter_mode" value="existing" {% if (cover_letter_mode or 'existing') != 'upload' %}checked{% endif %} data-document-mode>
+                      <span>Use Existing</span>
+                    </label>
+                    <label class="document-mode-pill">
+                      <input type="radio" name="cover_letter_mode" value="upload" {% if (cover_letter_mode or '') == 'upload' %}checked{% endif %} data-document-mode>
+                      <span>Upload New</span>
+                    </label>
+                  </div>
+
+                  <div class="document-panel {% if (cover_letter_mode or 'existing') != 'upload' %}is-active{% endif %}" data-document-panel="existing">
+                    <div class="form-group" style="margin-bottom:0;">
+                      <label class="form-label" for="cover_letter_fk">Choose a Stored Cover Letter</label>
+                      <select class="form-control" id="cover_letter_fk" name="cover_letter_fk" data-document-existing>
+                        <option value="">No cover letter</option>
+                        {% for cover_letter in cover_letters %}
+                        <option value="{{ cover_letter.cover_letter_id }}" {% if cover_letter_fk and cover_letter_fk|string == cover_letter.cover_letter_id|string %}selected{% endif %}>{{ cover_letter.cover_letter_name }}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                    {% if cover_letters %}
+                    <div class="field-microcopy">{{ cover_letters|length }} stored cover letter{{ 's' if cover_letters|length != 1 else '' }} available.</div>
+                    {% else %}
+                    <div class="field-microcopy">No cover letters uploaded yet. You can still create the application without one.</div>
+                    {% endif %}
+                  </div>
+
+                  <div class="document-panel {% if (cover_letter_mode or '') == 'upload' %}is-active{% endif %}" data-document-panel="upload">
+                    <div class="form-row">
+                      <div class="form-group">
+                        <label class="form-label" for="cover_letter_name">Cover Letter Name</label>
+                        <input class="form-control" type="text" id="cover_letter_name" name="cover_letter_name" value="{{ cover_letter_name or '' }}" placeholder="Acme Cover Letter" data-document-name>
+                        <div class="field-microcopy">We’ll default this to the file name if you leave it blank.</div>
+                      </div>
+                    </div>
+                    <div class="form-group" style="margin-bottom:0;">
+                      <label class="form-label" for="cover_letter_file">Cover Letter File</label>
+                      <div class="file-upload-area" role="button" tabindex="0" aria-label="Upload cover letter. Click or drag and drop.">
+                        <input type="file" id="cover_letter_file" name="cover_letter_file" accept=".pdf,.doc,.docx" data-document-file/>
+                        <div class="file-upload-icon" aria-hidden="true">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4"/><path d="m7 9 5-5 5 5"/><path d="M20 16.5a3.5 3.5 0 0 1-3.5 3.5h-9A3.5 3.5 0 0 1 4 16.5"/></svg>
+                        </div>
+                        <span class="file-upload-label">Drop a cover letter here, or <span class="file-upload-accent">browse</span></span>
+                        <span class="file-upload-hint">PDF, DOC, or DOCX</span>
+                      </div>
+                      <div class="file-selected" style="display:none;">
+                        <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd"/></svg>
+                        <span class="file-selected-name">cover-letter.pdf</span>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              </div>
+
+              <div style="height:1px;background:var(--border);margin:var(--space-5) 0;"></div>
+              <div class="form-actions-row">
+                <button type="submit" class="btn btn-primary magnetic-wrap" style="flex:1;height:46px;">Create Application</button>
+                <a href="/applications" class="btn btn-glass" style="height:46px;">Cancel</a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+{% endblock %}

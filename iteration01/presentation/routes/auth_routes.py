@@ -10,6 +10,7 @@ auth_controller = None
 @router.get("/", response_class=HTMLResponse)
 def show_landing_page(request: Request):
     return templates.TemplateResponse(
+        request,
         "landing.html",
         {
             "request": request
@@ -19,6 +20,7 @@ def show_landing_page(request: Request):
 @router.get("/login", response_class=HTMLResponse)
 def show_login_page(request: Request):
     return templates.TemplateResponse(
+        request,
         "login.html",
         {
             "request": request,
@@ -38,10 +40,17 @@ def login(request: Request, username: str = Form(...), password: str = Form(...)
             httponly=True,
             samesite="lax"
         )
+        response.set_cookie(
+            key="username",
+            value=user.username,
+            httponly=False,
+            samesite="lax"
+        )
         return response
 
     except ValueError as e:
         return templates.TemplateResponse(
+            request,
             "login.html",
             {
                 "request": request,
@@ -52,6 +61,7 @@ def login(request: Request, username: str = Form(...), password: str = Form(...)
 @router.get("/register", response_class=HTMLResponse)
 def show_register_page(request: Request):
     return templates.TemplateResponse(
+        request,
         "register.html",
         {
             "request": request,
@@ -68,6 +78,7 @@ def register(request: Request, name: str = Form(...), username: str = Form(...),
 
     except ValueError as e:
         return templates.TemplateResponse(
+            request,
             "register.html",
             {
                 "request": request,
@@ -79,4 +90,5 @@ def register(request: Request, name: str = Form(...), username: str = Form(...),
 def logout():
     response = RedirectResponse(url="/", status_code=303)
     response.delete_cookie("user_id")
+    response.delete_cookie("username")
     return response

@@ -1,3 +1,4 @@
 *.vpp
 notes.txt
 *.env
+__pycache__/

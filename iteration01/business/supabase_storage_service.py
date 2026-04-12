@@ -32,3 +32,14 @@ class SupabaseStorageService:
             return response.get("signedURL") or response.get("signed_url")
 
         raise ValueError("Could not create signed URL")
+
+    def download_file(self, bucket_name, storage_path):
+        response = self.client.storage.from_(bucket_name).download(storage_path)
+
+        if isinstance(response, (bytes, bytearray)):
+            return bytes(response)
+
+        if hasattr(response, "read"):
+            return response.read()
+
+        raise ValueError("Could not download stored file")

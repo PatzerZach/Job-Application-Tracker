@@ -55,9 +55,9 @@ class AuthService:
                 if get_user_by_email(conn, email):
                     raise ValueError("Email already exists")
 
-            password_hash = hash_password(password)
+            password_hash = self.hash_password(password)
 
-            user_id = create_user(name, username, password_hash, email)
+            user_id = create_user(conn, name, username, password_hash, email)
             
         return user_id
 

@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% block title %}Upload Cover Letter{% endblock %}
+{% set active_page = 'cover_letters' %}
+
+{% block body %}
+<div id="scroll-progress" aria-hidden="true"></div>
+<div id="cursor-dot" aria-hidden="true"></div>
+<div id="cursor-ring" aria-hidden="true"></div>
+
+<div class="app-layout">
+  {% include '_sidebar.html' %}
+
+  <main class="app-main" id="main-content">
+    <header class="app-topbar">
+      <button class="mobile-menu-toggle" aria-label="Open menu">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5A.75.75 0 012 10z" clip-rule="evenodd"/></svg>
+      </button>
+
+      <div class="topbar-breadcrumb">
+        <a href="/cover_letters">Cover Letters</a>
+        <span class="topbar-breadcrumb-sep">/</span>
+        <span class="topbar-breadcrumb-current">Upload</span>
+      </div>
+    </header>
+
+    <div class="page-content">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Upload Cover Letter</h1>
+          <p class="page-subtitle">Add a cover letter to your document vault</p>
+        </div>
+        <div class="page-actions">
+          <a href="/cover_letters" class="btn btn-glass">
+            <svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M10 12L6 8l4-4"/></svg>
+            Back
+          </a>
+        </div>
+      </div>
+
+      {% if error %}
+      <div class="alert alert-error" role="alert">
+        <svg class="alert-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-5a.75.75 0 01.75.75v4.5a.75.75 0 01-1.5 0v-4.5A.75.75 0 0110 5zm0 10a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/></svg>
+        <span>{{ error }}</span>
+        <button class="alert-close" aria-label="Dismiss">x</button>
+      </div>
+      {% endif %}
+
+      <div class="page-shell-compact">
+        <div class="detail-section tilt-card shimmer" data-reveal>
+          <div aria-hidden="true" style="position:absolute; top:0; left:15%; right:15%; height:1px; background:linear-gradient(90deg,transparent,var(--accent-glow),transparent);"></div>
+          <div class="detail-section-header">
+            <div class="detail-section-icon" aria-hidden="true"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg></div>
+            <span class="detail-section-title">Cover Letter Details</span>
+          </div>
+
+          <div class="detail-section-body">
+            <form method="POST" action="/cover_letters/create" enctype="multipart/form-data" data-validate novalidate>
+              <div class="form-group">
+                <label class="form-label" for="cover_letter_name">Cover Letter Name <span style="color:var(--danger);">*</span></label>
+                <input class="form-control" type="text" id="cover_letter_name" name="cover_letter_name" placeholder="e.g. Google - SWE Internship 2025" value="{{ cover_letter_name or '' }}" data-autofill-from-file required autofocus/>
+                <span class="form-hint">A descriptive name so you can find it when linking to applications.</span>
+                <span class="form-error-text">Cover letter name is required.</span>
+              </div>
+
+              <div class="form-group" style="margin-bottom:0;">
+                <label class="form-label" for="file">File <span style="color:var(--danger);">*</span></label>
+                <div class="file-upload-area" id="drop-zone" role="button" tabindex="0" aria-label="Upload file. Click or drag and drop.">
+                  <input type="file" id="file" name="file" accept=".pdf,.doc,.docx,.txt" required aria-describedby="file-hint"/>
+                  <div class="file-upload-icon" aria-hidden="true">
+                    <svg viewBox="0 0 52 52" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="6" y="16" width="40" height="28" rx="3"/>
+                      <polyline points="6,16 26,32 46,16"/>
+                      <path d="M26 4v14M19 10l7-7 7 7"/>
+                    </svg>
+                  </div>
+                  <span class="file-upload-label">Drop your file here, or <span class="file-upload-accent">browse</span></span>
+                  <span class="file-upload-hint" id="file-hint">PDF, DOC, DOCX or TXT · Max 10 MB</span>
+                </div>
+
+                <div class="file-selected" id="file-selected" style="display:none;">
+                  <svg width="15" height="15" viewBox="0 0 20 20" fill="currentColor" style="color:var(--accent); flex-shrink:0;" aria-hidden="true"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg>
+                  <span class="file-selected-name" id="file-selected-name">filename.pdf</span>
+                  <button type="button" id="file-clear" aria-label="Remove selected file" style="background:none; border:none; color:var(--text-muted); padding:2px; display:flex; align-items:center; margin-left:auto; transition:color var(--transition-fast);">
+                    <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z"/></svg>
+                  </button>
+                </div>
+              </div>
+
+              <div style="height:1px; background:var(--border); margin:var(--space-6) 0;"></div>
+
+              <div class="form-actions-row">
+                <button type="submit" class="btn btn-primary magnetic-wrap" style="flex:1; height:46px; font-size:0.95rem;">
+                  <svg width="15" height="15" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>
+                  Upload Cover Letter
+                </button>
+                <a href="/cover_letters" class="btn btn-glass" style="height:46px;">Cancel</a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+{% endblock %}

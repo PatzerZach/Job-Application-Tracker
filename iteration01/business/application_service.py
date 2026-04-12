@@ -8,15 +8,17 @@ class ApplicationService:
         self.db_path = db_path
 
     def create_application(self, user_id, date_applied, job_title, job_company=None, job_name=None, job_description=None, job_phone=None,
-                           job_email=None, resume_id=None, cover_letter_id=None, job_notes=None):
+                           job_email=None, job_city=None, job_state=None, job_country="United States", hourly_rate=None,
+                           salary_amount=None, resume_id=None, cover_letter_id=None, job_notes=None):
         if not job_title:
             raise ValueError("Job Title is required")
         
         if not date_applied:
             raise ValueError("Date Applied required")
 
-        # Grabbing the integer value of NOT_APPLIED from the enum which is 0
-        status = ApplicationStatus.NOT_APPLIED.value
+        # New applications created here represent jobs the user is actively tracking,
+        # so default them to Applied to reduce an extra follow-up status edit.
+        status = ApplicationStatus.APPLIED.value
 
         with connect(self.db_path) as conn:
             return create_application(
@@ -27,6 +29,11 @@ class ApplicationService:
                 job_company=job_company,
                 job_name=job_name,
                 job_description=job_description,
+                job_city=job_city,
+                job_state=job_state,
+                job_country=job_country,
+                hourly_rate=hourly_rate,
+                salary_amount=salary_amount,
                 job_phone=job_phone,
                 job_email=job_email,
                 resume_fk=resume_id,
@@ -36,7 +43,8 @@ class ApplicationService:
             )
 
     def update_application(self, app_id, user_id, job_title=None, job_company=None, job_name=None, job_description=None, job_phone=None,
-                           job_email=None, resume_fk=None, cover_letter_fk=None, job_status=None, job_notes=None, date_applied=None):
+                           job_email=None, job_city=None, job_state=None, job_country=None, hourly_rate=None, salary_amount=None,
+                           resume_fk=None, cover_letter_fk=None, job_status=None, job_notes=None, date_applied=None):
         updates = {}
 
         field_map = {
@@ -44,6 +52,11 @@ class ApplicationService:
             "job_company" : job_company,
             "job_name" : job_name,
             "job_description" : job_description,
+            "job_city" : job_city,
+            "job_state" : job_state,
+            "job_country" : job_country,
+            "hourly_rate" : hourly_rate,
+            "salary_amount" : salary_amount,
             "job_phone" : job_phone,
             "job_email" : job_email,
             "resume_fk" : resume_fk,
@@ -84,6 +97,11 @@ class ApplicationService:
                 job_name=row["job_name"],
                 job_title=row["job_title"],
                 job_description=row["job_description"],
+                job_city=row.get("job_city"),
+                job_state=row.get("job_state"),
+                job_country=row.get("job_country"),
+                hourly_rate=row.get("hourly_rate"),
+                salary_amount=row.get("salary_amount"),
                 job_phone=row["job_phone"],
                 job_email=row["job_email"],
                 resume_id=row["resume_fk"],

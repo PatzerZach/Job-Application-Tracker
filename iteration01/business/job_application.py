@@ -9,7 +9,12 @@ class JobApplication:
     job_name: str
     job_title: str
     job_description: str
-    job_phone: int
+    job_city: str
+    job_state: str
+    job_country: str
+    hourly_rate: float
+    salary_amount: float
+    job_phone: str
     job_email: str
     resume_id: int
     cover_letter_id: int

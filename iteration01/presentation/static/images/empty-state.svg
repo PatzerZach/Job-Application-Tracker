@@ -1,0 +1,65 @@
+<svg viewBox="0 0 240 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="doc-grad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1e1e3a"/>
+      <stop offset="100%" stop-color="#13132a"/>
+    </linearGradient>
+    <linearGradient id="gold-g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f0c84a"/>
+      <stop offset="100%" stop-color="#c9a82a"/>
+    </linearGradient>
+    <filter id="doc-shadow">
+      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="rgba(0,0,0,0.5)"/>
+    </filter>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Outer glow ring -->
+  <circle cx="120" cy="110" r="85" fill="rgba(240,200,74,0.04)" stroke="rgba(240,200,74,0.08)" stroke-width="1" stroke-dasharray="4 6"/>
+  <circle cx="120" cy="110" r="62" fill="rgba(240,200,74,0.04)"/>
+
+  <!-- Background doc (tilted, behind) -->
+  <g transform="rotate(-8 120 110)" filter="url(#doc-shadow)">
+    <rect x="72" y="54" width="80" height="104" rx="8" fill="url(#doc-grad)" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+    <rect x="82" y="74" width="44" height="4" rx="2" fill="rgba(255,255,255,0.1)"/>
+    <rect x="82" y="84" width="56" height="4" rx="2" fill="rgba(255,255,255,0.07)"/>
+    <rect x="82" y="94" width="50" height="4" rx="2" fill="rgba(255,255,255,0.07)"/>
+    <rect x="82" y="104" width="38" height="4" rx="2" fill="rgba(255,255,255,0.05)"/>
+  </g>
+
+  <!-- Front doc -->
+  <g filter="url(#doc-shadow)">
+    <rect x="82" y="44" width="84" height="108" rx="10" fill="url(#doc-grad)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+    <!-- Dog-ear fold -->
+    <path d="M146 44 L166 64 H146 V44Z" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+    <!-- Lines -->
+    <rect x="96" y="76" width="36" height="5" rx="2" fill="rgba(240,200,74,0.5)"/>
+    <rect x="96" y="88" width="60" height="4" rx="2" fill="rgba(255,255,255,0.2)"/>
+    <rect x="96" y="98" width="52" height="4" rx="2" fill="rgba(255,255,255,0.15)"/>
+    <rect x="96" y="108" width="56" height="4" rx="2" fill="rgba(255,255,255,0.12)"/>
+    <rect x="96" y="118" width="44" height="4" rx="2" fill="rgba(255,255,255,0.1)"/>
+    <!-- Mini badge on doc -->
+    <rect x="96" y="132" width="44" height="14" rx="7" fill="rgba(74,222,128,0.15)" stroke="rgba(74,222,128,0.3)" stroke-width="0.5"/>
+    <circle cx="104" cy="139" r="2.5" fill="#4ade80"/>
+    <rect x="109" y="136.5" width="22" height="4" rx="2" fill="#4ade80" opacity="0.7"/>
+  </g>
+
+  <!-- Plus circle button - top right -->
+  <circle cx="176" cy="68" r="20" fill="rgba(240,200,74,0.1)" stroke="rgba(240,200,74,0.25)" stroke-width="1.5" filter="url(#glow)"/>
+  <circle cx="176" cy="68" r="14" fill="rgba(240,200,74,0.15)"/>
+  <path d="M176 60v16M168 68h16" stroke="#f0c84a" stroke-width="2" stroke-linecap="round" filter="url(#glow)"/>
+
+  <!-- Sparkle dots -->
+  <circle cx="64" cy="64" r="3.5" fill="#f0c84a" opacity="0.5" filter="url(#glow)"/>
+  <circle cx="62" cy="62" r="1.5" fill="#f0c84a" opacity="0.3"/>
+  <circle cx="176" cy="160" r="4" fill="#22d3ee" opacity="0.4" filter="url(#glow)"/>
+  <circle cx="56" cy="150" r="2.5" fill="#a78bfa" opacity="0.4"/>
+  <circle cx="196" cy="110" r="2" fill="#f0c84a" opacity="0.35"/>
+
+  <!-- Star sparkles -->
+  <path d="M48 88 L50 82 L52 88 L58 90 L52 92 L50 98 L48 92 L42 90 Z" fill="#f0c84a" opacity="0.3" filter="url(#glow)"/>
+  <path d="M192 44 L193.5 40 L195 44 L199 45.5 L195 47 L193.5 51 L192 47 L188 45.5 Z" fill="#22d3ee" opacity="0.3"/>
+</svg>

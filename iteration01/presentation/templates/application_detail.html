@@ -1,0 +1,240 @@
+{% extends "base.html" %}
+{% block title %}{{ application.job_title }} - {{ application.job_company }}{% endblock %}
+{% set active_page = 'applications' %}
+{% block head %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
+{% endblock %}
+
+{% block body %}
+{% set has_location = application.job_city or application.job_state or application.job_country %}
+{% set has_compensation = application.hourly_rate or application.salary_amount %}
+<div id="scroll-progress" aria-hidden="true"></div>
+<div id="cursor-dot" aria-hidden="true"></div>
+<div id="cursor-ring" aria-hidden="true"></div>
+
+<div class="app-layout">
+  {% include '_sidebar.html' %}
+
+  <main class="app-main" id="main-content">
+    <header class="app-topbar">
+      <button class="mobile-menu-toggle" aria-label="Open menu">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5A.75.75 0 012 10z" clip-rule="evenodd"/></svg>
+      </button>
+      <div class="topbar-breadcrumb">
+        <a href="/applications">Applications</a>
+        <span class="topbar-breadcrumb-sep">/</span>
+        <span class="topbar-breadcrumb-current">{{ application.job_company }}</span>
+      </div>
+      <div class="topbar-actions">
+        <span class="badge badge-{{ application.job_status.name | lower }}" id="status-badge" aria-live="polite">
+          <span>{{ application.job_status.name.replace('_', ' ') | title }}</span>
+        </span>
+      </div>
+    </header>
+
+    <div class="page-content">
+      {% if success %}<div class="alert alert-success" role="alert" data-auto-dismiss><svg class="alert-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd"/></svg><span>{{ success }}</span><button class="alert-close" aria-label="Dismiss">x</button></div>{% endif %}
+      {% if error %}<div class="alert alert-error" role="alert"><svg class="alert-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-5a.75.75 0 01.75.75v4.5a.75.75 0 01-1.5 0v-4.5A.75.75 0 0110 5zm0 10a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/></svg><span>{{ error }}</span><button class="alert-close" aria-label="Dismiss">x</button></div>{% endif %}
+
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">{{ application.job_title }}</h1>
+          <p class="page-subtitle">
+            {{ application.job_company }}
+            {% if has_location %}
+              -
+              {% if application.job_city %}{{ application.job_city }}{% endif %}
+              {% if application.job_state %}{% if application.job_city %}, {% endif %}{{ application.job_state }}{% endif %}
+              {% if application.job_country %}{% if application.job_city or application.job_state %}, {% endif %}{{ application.job_country }}{% endif %}
+            {% endif %}
+            {% if application.date_applied %} - Applied {{ application.date_applied }}{% endif %}
+          </p>
+        </div>
+        <div class="page-actions">
+          <a href="/applications" class="btn btn-glass">
+            <svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M10 12L6 8l4-4"/></svg>
+            All
+          </a>
+          <form method="POST" action="/application/{{ application.application_id }}/delete" id="delete-form">
+            <button type="button" class="btn btn-danger btn-sm" data-confirm="Delete '{{ application.job_title }}' at {{ application.job_company }}? This cannot be undone.">
+              <svg width="13" height="13" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M8.75 1A2.75 2.75 0 006 3.75v.443c-.795.077-1.584.176-2.365.298a.75.75 0 10.23 1.482l.149-.022.841 10.518A2.75 2.75 0 007.596 19h4.807a2.75 2.75 0 002.742-2.53l.841-10.52.149.023a.75.75 0 00.23-1.482A41.03 41.03 0 0014 4.193V3.75A2.75 2.75 0 0011.25 1h-2.5z" clip-rule="evenodd"/></svg>
+              Delete
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <div class="detail-grid">
+        <div>
+          <div class="detail-section shimmer" data-reveal>
+            <div class="detail-section-header"><div class="detail-section-icon" aria-hidden="true"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"/></svg></div><span class="detail-section-title">Job Details</span></div>
+            <div class="detail-section-body">
+              <div class="detail-pair-grid detail-pair-grid-spaced">
+                <div class="detail-field" style="margin-bottom:0;"><span class="detail-field-label">Company</span><span class="detail-field-value">{{ application.job_company }}</span></div>
+                <div class="detail-field" style="margin-bottom:0;"><span class="detail-field-label">Role</span><span class="detail-field-value">{{ application.job_title }}</span></div>
+              </div>
+              <div class="detail-pair-grid">
+                <div class="detail-field" style="margin-bottom:0;"><span class="detail-field-label">Posting Name</span><span class="detail-field-value {% if not application.job_name %}detail-field-empty{% endif %}">{{ application.job_name if application.job_name else 'Not specified' }}</span></div>
+                <div class="detail-field" style="margin-bottom:0;"><span class="detail-field-label">Date Applied</span><span class="detail-field-value" style="font-family:var(--font-mono);">{{ application.date_applied if application.date_applied else '-' }}</span></div>
+              </div>
+              <div style="height:1px;background:var(--border);margin:var(--space-5) 0;"></div>
+              <div class="detail-field" style="margin-bottom:0;">
+                <span class="detail-field-label">Location</span>
+                {% if has_location %}
+                <div class="location-pills" style="margin-top:var(--space-2);">
+                  {% if application.job_city %}<span class="location-pill">{{ application.job_city }}</span>{% endif %}
+                  {% if application.job_state %}<span class="location-pill">{{ application.job_state }}</span>{% endif %}
+                  {% if application.job_country %}<span class="location-pill location-pill-accent">{{ application.job_country }}</span>{% endif %}
+                </div>
+                {% else %}
+                <span class="detail-field-value detail-field-empty">Not specified</span>
+                {% endif %}
+              </div>
+              <div style="height:1px;background:var(--border);margin:var(--space-5) 0;"></div>
+              <div class="detail-field" style="margin-bottom:0;">
+                <span class="detail-field-label">Compensation</span>
+                {% if has_compensation %}
+                <div class="comp-pills" style="margin-top:var(--space-2);">
+                  {% if application.hourly_rate %}<span class="comp-pill">$ {{ application.hourly_rate }}/hr</span>{% endif %}
+                  {% if application.salary_amount %}<span class="comp-pill comp-pill-accent">$ {{ application.salary_amount }}/yr</span>{% endif %}
+                </div>
+                {% else %}
+                <span class="detail-field-value detail-field-empty">Not specified</span>
+                {% endif %}
+              </div>
+              {% if application.job_description %}
+              <div style="height:1px;background:var(--border);margin:var(--space-5) 0;"></div>
+              <div class="detail-field" style="margin-bottom:0;"><span class="detail-field-label">Description</span><div style="margin-top:var(--space-2);font-size:0.9rem;color:var(--text-secondary);line-height:1.78;white-space:pre-wrap;">{{ application.job_description }}</div></div>
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="detail-section shimmer" style="margin-top:var(--space-5);" data-reveal data-reveal-delay="1">
+            <div class="detail-section-header"><div class="detail-section-icon" aria-hidden="true"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/></svg></div><span class="detail-section-title">Contact</span></div>
+            <div class="detail-section-body">
+              <div class="detail-pair-grid">
+                <div class="detail-field" style="margin-bottom:0;"><span class="detail-field-label">Phone</span><span class="detail-field-value {% if not application.job_phone %}detail-field-empty{% endif %}" style="font-family:var(--font-mono);">{{ application.job_phone if application.job_phone else 'Not provided' }}</span></div>
+                <div class="detail-field" style="margin-bottom:0;"><span class="detail-field-label">Email</span>{% if application.job_email %}<a href="mailto:{{ application.job_email }}" class="detail-field-value" style="color:var(--accent);font-family:var(--font-mono);">{{ application.job_email }}</a>{% else %}<span class="detail-field-value detail-field-empty">Not provided</span>{% endif %}</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="detail-section shimmer" style="margin-top:var(--space-5);" data-reveal data-reveal-delay="2">
+            <div class="detail-section-header"><div class="detail-section-icon" aria-hidden="true"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"/></svg></div><span class="detail-section-title">Documents</span></div>
+            <div class="detail-section-body">
+              <div class="detail-doc-grid">
+                <div><span class="detail-field-label" style="display:block;margin-bottom:var(--space-2);">Resume</span>{% if application.resume_id %}<a href="/resumes/{{ application.resume_id }}/download" class="btn btn-glass btn-sm" style="width:100%;justify-content:center;"><svg width="12" height="12" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/></svg> Resume #{{ application.resume_id }}</a>{% else %}<span class="detail-field-value detail-field-empty" style="font-size:0.85rem;">None attached</span>{% endif %}</div>
+                <div><span class="detail-field-label" style="display:block;margin-bottom:var(--space-2);">Cover Letter</span>{% if application.cover_letter_id %}<a href="/cover_letters/{{ application.cover_letter_id }}/download" class="btn btn-glass btn-sm" style="width:100%;justify-content:center;"><svg width="12" height="12" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/></svg> Cover Letter #{{ application.cover_letter_id }}</a>{% else %}<span class="detail-field-value detail-field-empty" style="font-size:0.85rem;">None attached</span>{% endif %}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="detail-section tilt-card shimmer detail-edit-panel" data-reveal>
+            <div aria-hidden="true" style="position:absolute;top:0;left:15%;right:15%;height:1px;background:linear-gradient(90deg,transparent,var(--accent-glow),transparent);"></div>
+            <div class="detail-section-header"><div class="detail-section-icon" aria-hidden="true"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"/></svg></div><span class="detail-section-title">Edit Application</span></div>
+            <div class="detail-section-body">
+              <form method="POST" action="/applications/{{ application.application_id }}/update" data-validate novalidate>
+                <div class="form-group">
+                  <label class="form-label" for="edit_date_applied">Date Applied</label>
+                  <div class="custom-date-picker" data-date-picker>
+                    <input type="hidden" id="edit_date_applied" name="date_applied" value="{{ application.date_applied if application.date_applied else '' }}" data-date-value>
+                    <button type="button" class="custom-date-trigger" data-date-trigger aria-haspopup="dialog" aria-expanded="false">
+                      <span class="custom-date-trigger-icon" aria-hidden="true">
+                        <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6 2a1 1 0 011 1v1h6V3a1 1 0 112 0v1h.25A2.75 2.75 0 0118 6.75v8.5A2.75 2.75 0 0115.25 18h-10.5A2.75 2.75 0 012 15.25v-8.5A2.75 2.75 0 014.75 4H5V3a1 1 0 011-1zm9.5 7h-11v6.25c0 .69.56 1.25 1.25 1.25h8.5c.69 0 1.25-.56 1.25-1.25V9z" clip-rule="evenodd"/></svg>
+                      </span>
+                      <span class="custom-date-trigger-copy">
+                        <span class="custom-date-label" data-date-label>Select a date</span>
+                        <span class="custom-date-hint">Launch cinematic calendar</span>
+                      </span>
+                    </button>
+                    <div class="custom-date-popover" data-date-popover hidden></div>
+                  </div>
+                </div>
+                <div class="form-group"><label class="form-label" for="edit_title">Job Title</label><input class="form-control" type="text" id="edit_title" name="job_title" value="{{ application.job_title }}" required/></div>
+                <div class="form-group"><label class="form-label" for="edit_company">Company</label><input class="form-control" type="text" id="edit_company" name="job_company" value="{{ application.job_company }}" required/></div>
+                <div class="form-group"><label class="form-label" for="edit_name">Posting Name</label><input class="form-control" type="text" id="edit_name" name="job_name" value="{{ application.job_name if application.job_name else '' }}"/></div>
+                <div class="form-row form-row-third">
+                  <div class="form-group"><label class="form-label" for="edit_city">City</label><input class="form-control" type="text" id="edit_city" name="job_city" value="{{ application.job_city if application.job_city else '' }}"/></div>
+                  <div class="form-group"><label class="form-label" for="edit_state">State</label><input class="form-control" type="text" id="edit_state" name="job_state" value="{{ application.job_state if application.job_state else '' }}"/></div>
+                  <div class="form-group"><label class="form-label" for="edit_country">Country</label><input class="form-control" type="text" id="edit_country" name="job_country" value="{{ application.job_country if application.job_country else 'United States' }}"/></div>
+                </div>
+                <div class="location-picker" data-location-picker style="margin-bottom:var(--space-5);">
+                  <div class="form-group">
+                    <label class="form-label" for="edit_location_search">Verified Location Search</label>
+                    <div class="location-search-shell">
+                      <span class="location-search-icon" aria-hidden="true"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd"/></svg></span>
+                      <input class="form-control location-search-input" type="text" id="edit_location_search" placeholder="Search a city or place..." autocomplete="off" data-location-search>
+                      <div class="location-search-results" data-location-results hidden></div>
+                    </div>
+                    <div class="field-microcopy">Search or click the map to replace the current city, state, and country values.</div>
+                    {% if not geoapify_enabled %}
+                    <div class="field-microcopy" style="color:var(--warning);">Add `GEOAPIFY_API_KEY` to enable verified search and the interactive map.</div>
+                    {% endif %}
+                  </div>
+
+                  <div class="location-map-shell">
+                    <div class="location-map-toolbar">
+                      <span class="location-map-toolbar-copy">Click anywhere after zooming and we’ll pull the nearest matched place.</span>
+                      <button type="button" class="btn btn-glass btn-sm" data-location-reset>Reset View</button>
+                    </div>
+                    <div class="location-map" data-location-map data-geoapify-enabled="{{ 'true' if geoapify_enabled else 'false' }}"></div>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label" for="edit_hourly_rate">Hourly Rate</label>
+                    <div class="input-prefix-wrap input-stepper-wrap" data-number-stepper>
+                      <span class="input-prefix">$</span>
+                      <input class="form-control input-with-prefix input-with-stepper" type="number" step="0.01" min="0" id="edit_hourly_rate" name="hourly_rate" value="{{ application.hourly_rate if application.hourly_rate else '' }}"/>
+                      <div class="input-stepper-buttons">
+                        <button type="button" class="input-stepper-btn" data-step-action="up" aria-label="Increase hourly rate">
+                          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M2 7l4-4 4 4"/></svg>
+                        </button>
+                        <button type="button" class="input-stepper-btn" data-step-action="down" aria-label="Decrease hourly rate">
+                          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M2 5l4 4 4-4"/></svg>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="edit_salary_amount">Salary</label>
+                    <div class="input-prefix-wrap input-stepper-wrap" data-number-stepper>
+                      <span class="input-prefix">$</span>
+                      <input class="form-control input-with-prefix input-with-stepper" type="number" step="0.01" min="0" id="edit_salary_amount" name="salary_amount" value="{{ application.salary_amount if application.salary_amount else '' }}"/>
+                      <div class="input-stepper-buttons">
+                        <button type="button" class="input-stepper-btn" data-step-action="up" aria-label="Increase salary">
+                          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M2 7l4-4 4 4"/></svg>
+                        </button>
+                        <button type="button" class="input-stepper-btn" data-step-action="down" aria-label="Decrease salary">
+                          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M2 5l4 4 4-4"/></svg>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group"><label class="form-label" for="edit_email">Contact Email</label><input class="form-control" type="email" id="edit_email" name="job_email" value="{{ application.job_email if application.job_email else '' }}"/></div>
+                <div class="form-group"><label class="form-label" for="edit_phone">Contact Phone</label><input class="form-control" type="text" id="edit_phone" name="job_phone" value="{{ application.job_phone if application.job_phone else '' }}"/></div>
+                <div class="form-group"><label class="form-label" for="status-select">Status</label>
+                  <select class="form-control" id="status-select" name="job_status">
+                    <option value="0" {% if application.job_status.value == 0 %}selected{% endif %}>Not Applied</option>
+                    <option value="1" {% if application.job_status.value == 1 %}selected{% endif %}>Applied</option>
+                    <option value="2" {% if application.job_status.value == 2 %}selected{% endif %}>Interviewing</option>
+                    <option value="3" {% if application.job_status.value == 3 %}selected{% endif %}>Offer</option>
+                    <option value="4" {% if application.job_status.value == 4 %}selected{% endif %}>Rejected</option>
+                  </select>
+                </div>
+                <div class="form-group" style="margin-bottom:0;"><label class="form-label" for="edit_desc">Description</label><textarea class="form-control" id="edit_desc" name="job_description" rows="4" data-auto-resize placeholder="Interview prep, follow-ups, impressions...">{{ application.job_description if application.job_description else '' }}</textarea></div>
+                <div style="height:1px;background:var(--border);margin:var(--space-5) 0;"></div>
+                <button type="submit" class="btn btn-primary btn-block magnetic-wrap">Save Changes</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+{% endblock %}

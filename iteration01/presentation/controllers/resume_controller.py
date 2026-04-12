@@ -18,3 +18,6 @@ class ResumeController:
     
     def get_resume_download_url(self, user_id, resume_id, expires_in=3600):
         return self.resume_service.get_resume_download_url(user_id, resume_id, expires_in)
+
+    def get_resume_file(self, user_id, resume_id):
+        return self.resume_service.get_resume_file(user_id, resume_id)
