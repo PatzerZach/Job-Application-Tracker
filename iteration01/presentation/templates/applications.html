@@ -1,14 +1,18 @@
-{% extends "base.html" %} {% block title %}Applications{% endblock %} {% set
-active_page = 'applications' %} {% block body %} {% set stats =
-namespace(total=applications|length if applications else 0, not_applied=0,
-applied=0, interviewing=0, offer=0, rejected=0) %} {% if applications %} {% for
-app in applications %} {% if app.job_status.value == 0 %}{% set
-stats.not_applied = stats.not_applied + 1 %}{% endif %} {% if
-app.job_status.value == 1 %}{% set stats.applied = stats.applied + 1 %}{% endif
-%} {% if app.job_status.value == 2 %}{% set stats.interviewing =
-stats.interviewing + 1 %}{% endif %} {% if app.job_status.value == 3 %}{% set
-stats.offer = stats.offer + 1 %}{% endif %} {% if app.job_status.value == 4 %}{%
-set stats.rejected = stats.rejected + 1 %}{% endif %} {% endfor %} {% endif %}
+{% extends "base.html" %}
+{% block title %}Applications{% endblock %}
+{% set active_page = 'applications' %}
+
+{% block body %}
+{% set stats = namespace(total=applications|length if applications else 0, not_applied=0, applied=0, interviewing=0, offer=0, rejected=0) %}
+{% if applications %}
+  {% for app in applications %}
+    {% if app.job_status.value == 0 %}{% set stats.not_applied = stats.not_applied + 1 %}{% endif %}
+    {% if app.job_status.value == 1 %}{% set stats.applied = stats.applied + 1 %}{% endif %}
+    {% if app.job_status.value == 2 %}{% set stats.interviewing = stats.interviewing + 1 %}{% endif %}
+    {% if app.job_status.value == 3 %}{% set stats.offer = stats.offer + 1 %}{% endif %}
+    {% if app.job_status.value == 4 %}{% set stats.rejected = stats.rejected + 1 %}{% endif %}
+  {% endfor %}
+{% endif %}
 <div id="scroll-progress" aria-hidden="true"></div>
 <div id="cursor-dot" aria-hidden="true"></div>
 <div id="cursor-ring" aria-hidden="true"></div>
@@ -18,25 +22,8 @@ set stats.rejected = stats.rejected + 1 %}{% endif %} {% endfor %} {% endif %}
 
   <main class="app-main" id="main-content">
     <header class="app-topbar">
-      <button
-        class="mobile-menu-toggle"
-        aria-label="Open menu"
-        aria-expanded="false"
-        aria-controls="sidebar"
-      >
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-          aria-hidden="true"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5A.75.75 0 012 10z"
-            clip-rule="evenodd"
-          />
-        </svg>
+      <button class="mobile-menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="sidebar">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5A.75.75 0 012 10z" clip-rule="evenodd"/></svg>
       </button>
       <div class="topbar-breadcrumb">
         <span>AppsTrackr</span>
@@ -44,22 +31,8 @@ set stats.rejected = stats.rejected + 1 %}{% endif %} {% endfor %} {% endif %}
         <span class="topbar-breadcrumb-current">Applications</span>
       </div>
       <div class="topbar-actions">
-        <a
-          href="/applications/create"
-          class="btn btn-primary btn-sm magnetic-wrap"
-        >
-          <svg
-            width="12"
-            height="12"
-            viewBox="0 0 12 12"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2.5"
-            stroke-linecap="round"
-            aria-hidden="true"
-          >
-            <path d="M6 1v10M1 6h10" />
-          </svg>
+        <a href="/applications/create" class="btn btn-primary btn-sm magnetic-wrap">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M6 1v10M1 6h10"/></svg>
           New Application
         </a>
       </div>
@@ -68,18 +41,7 @@ set stats.rejected = stats.rejected + 1 %}{% endif %} {% endfor %} {% endif %}
     <div class="page-content page-content-wide">
       {% if success %}
       <div class="alert alert-success" role="alert" data-auto-dismiss>
-        <svg
-          class="alert-icon"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-          aria-hidden="true"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-            clip-rule="evenodd"
-          />
-        </svg>
+        <svg class="alert-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd"/></svg>
         <span>{{ success }}</span>
         <button class="alert-close" aria-label="Dismiss">x</button>
       </div>
@@ -88,126 +50,43 @@ set stats.rejected = stats.rejected + 1 %}{% endif %} {% endfor %} {% endif %}
       <div class="page-header">
         <div>
           <h1 class="page-title">Applications</h1>
-          <p class="page-subtitle">
-            {% if applications %}{{ applications | length }} application{{ 's'
-            if applications | length != 1 }}{% else %}Get started below{% endif
-            %}
-          </p>
+          <p class="page-subtitle">{% if applications %}{{ applications | length }} application{{ 's' if applications | length != 1 }}{% else %}Get started below{% endif %}</p>
         </div>
         <div class="page-actions">
           <a href="/applications/create" class="btn btn-primary magnetic-wrap">
-            <svg
-              width="13"
-              height="13"
-              viewBox="0 0 12 12"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2.5"
-              stroke-linecap="round"
-              aria-hidden="true"
-            >
-              <path d="M6 1v10M1 6h10" />
-            </svg>
+            <svg width="13" height="13" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M6 1v10M1 6h10"/></svg>
             Add Application
           </a>
         </div>
       </div>
 
       <div class="stats-bar" role="region" aria-label="Application statistics">
-        <div class="stat-card glow-on-hover shimmer" data-reveal>
-          <div class="stat-label">Total</div>
-          <div class="stat-value" data-count="{{ stats.total }}">
-            {{ stats.total }}
-          </div>
-        </div>
-        <div
-          class="stat-card glow-on-hover shimmer"
-          data-reveal
-          data-reveal-delay="1"
-        >
-          <div class="stat-label">Not Applied</div>
-          <div class="stat-value" data-count="{{ stats.not_applied }}">
-            {{ stats.not_applied }}
-          </div>
-        </div>
-        <div
-          class="stat-card glow-on-hover shimmer"
-          data-reveal
-          data-reveal-delay="2"
-        >
-          <div class="stat-label">Applied</div>
-          <div
-            class="stat-value stat-value-accent"
-            data-count="{{ stats.applied }}"
-          >
-            {{ stats.applied }}
-          </div>
-        </div>
-        <div
-          class="stat-card glow-on-hover shimmer"
-          data-reveal
-          data-reveal-delay="3"
-        >
-          <div class="stat-label">Interview</div>
-          <div
-            class="stat-value stat-value-warning"
-            data-count="{{ stats.interviewing }}"
-          >
-            {{ stats.interviewing }}
-          </div>
-        </div>
-        <div
-          class="stat-card glow-on-hover shimmer"
-          data-reveal
-          data-reveal-delay="4"
-        >
-          <div class="stat-label">Offers</div>
-          <div
-            class="stat-value stat-value-success"
-            data-count="{{ stats.offer }}"
-          >
-            {{ stats.offer }}
-          </div>
-        </div>
+        <div class="stat-card glow-on-hover shimmer" data-reveal><div class="stat-label">Total</div><div class="stat-value" data-count="{{ stats.total }}">{{ stats.total }}</div></div>
+        <div class="stat-card glow-on-hover shimmer" data-reveal data-reveal-delay="1"><div class="stat-label">Not Applied</div><div class="stat-value" data-count="{{ stats.not_applied }}">{{ stats.not_applied }}</div></div>
+        <div class="stat-card glow-on-hover shimmer" data-reveal data-reveal-delay="2"><div class="stat-label">Applied</div><div class="stat-value stat-value-accent" data-count="{{ stats.applied }}">{{ stats.applied }}</div></div>
+        <div class="stat-card glow-on-hover shimmer" data-reveal data-reveal-delay="3"><div class="stat-label">Interview</div><div class="stat-value stat-value-warning" data-count="{{ stats.interviewing }}">{{ stats.interviewing }}</div></div>
+        <div class="stat-card glow-on-hover shimmer" data-reveal data-reveal-delay="4"><div class="stat-label">Offers</div><div class="stat-value stat-value-success" data-count="{{ stats.offer }}">{{ stats.offer }}</div></div>
       </div>
 
       {% if applications %}
       <div class="app-table-wrap" data-reveal>
         <div class="app-table-header app-table-header-sticky">
           <div class="table-search" role="search">
-            <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-              <path
-                fill-rule="evenodd"
-                d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
-                clip-rule="evenodd"
-              />
-            </svg>
-            <input
-              type="text"
-              id="table-search"
-              placeholder="Search company, role, location, status..."
-              aria-label="Search applications"
-            />
+            <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd"/></svg>
+            <input type="text" id="table-search" placeholder="Search company, role, location, status..." aria-label="Search applications"/>
           </div>
-          <span class="table-results-count"
-            >{{ applications | length }} result{{ 's' if applications | length
-            != 1 }}</span
-          >
+          <span class="table-results-count">{{ applications | length }} result{{ 's' if applications | length != 1 }}</span>
         </div>
         <div class="app-table-scroller">
-          <table
-            class="table"
-            data-searchable
-            aria-label="Job applications list"
-          >
+          <table class="table" data-searchable aria-label="Job applications list">
             <colgroup>
-              <col class="col-company" />
-              <col class="col-role" />
-              <col class="col-location" />
-              <col class="col-pay" />
-              <col class="col-status" />
-              <col class="col-applied" />
-              <col class="col-actions" />
+              <col class="col-company">
+              <col class="col-role">
+              <col class="col-location">
+              <col class="col-pay">
+              <col class="col-status">
+              <col class="col-applied">
+              <col class="col-actions">
             </colgroup>
             <thead>
               <tr>
@@ -222,8 +101,7 @@ set stats.rejected = stats.rejected + 1 %}{% endif %} {% endfor %} {% endif %}
             </thead>
             <tbody>
               {% for app in applications %}
-              <tr
-                data-search-text="{{ [
+              <tr data-search-text="{{ [
                 app.job_company or '',
                 app.job_name or '',
                 app.job_title or '',
@@ -234,12 +112,9 @@ set stats.rejected = stats.rejected + 1 %}{% endif %} {% endfor %} {% endif %}
                 app.date_applied or '',
                 app.hourly_rate or '',
                 app.salary_amount or ''
-              ] | join(' ') }}"
-              >
+              ] | join(' ') }}">
                 <td class="table-company" data-label="Company">
-                  <div class="table-company-name">
-                    {{ app.job_company or '-' }}
-                  </div>
+                  <div class="table-company-name">{{ app.job_company or '-' }}</div>
                 </td>
                 <td class="table-title-cell" data-label="Role">
                   <div class="table-title">{{ app.job_title }}</div>
@@ -247,12 +122,9 @@ set stats.rejected = stats.rejected + 1 %}{% endif %} {% endfor %} {% endif %}
                 <td class="table-location-cell" data-label="Location">
                   {% if app.job_city or app.job_state or app.job_country %}
                   <div class="table-location">
-                    {% if app.job_city %}<span>{{ app.job_city }}</span>{% endif
-                    %} {% if app.job_state %}<span>{{ app.job_state }}</span>{%
-                    endif %} {% if app.job_country %}<span
-                      class="table-location-country"
-                      >{{ app.job_country }}</span
-                    >{% endif %}
+                    {% if app.job_city %}<span>{{ app.job_city }}</span>{% endif %}
+                    {% if app.job_state %}<span>{{ app.job_state }}</span>{% endif %}
+                    {% if app.job_country %}<span class="table-location-country">{{ app.job_country }}</span>{% endif %}
                   </div>
                   {% else %}
                   <span class="table-subtext">Not set</span>
@@ -261,93 +133,36 @@ set stats.rejected = stats.rejected + 1 %}{% endif %} {% endfor %} {% endif %}
                 <td class="table-pay-cell" data-label="Pay">
                   {% if app.hourly_rate or app.salary_amount %}
                   <div class="table-compensation">
-                    {% if app.hourly_rate %}<span class="table-comp-pill"
-                      >$ {{ app.hourly_rate }}/hr</span
-                    >{% endif %} {% if app.salary_amount %}<span
-                      class="table-comp-pill table-comp-pill-accent"
-                      >$ {{ app.salary_amount }}/yr</span
-                    >{% endif %}
+                    {% if app.hourly_rate %}<span class="table-comp-pill">$ {{ app.hourly_rate }}/hr</span>{% endif %}
+                    {% if app.salary_amount %}<span class="table-comp-pill table-comp-pill-accent">$ {{ app.salary_amount }}/yr</span>{% endif %}
                   </div>
                   {% else %}
                   <span class="table-subtext">Not set</span>
                   {% endif %}
                 </td>
                 <td class="table-status-cell" data-label="Status">
-                  <span
-                    class="table-status-text table-status-{{ app.job_status.name | lower }}"
-                  >
+                  <span class="table-status-text table-status-{{ app.job_status.name | lower }}">
                     {{ app.job_status.name.replace('_', ' ') | title }}
                   </span>
                 </td>
-                <td class="table-date" data-label="Applied Date">
-                  {{ app.date_applied if app.date_applied else '-' }}
-                </td>
+                <td class="table-date" data-label="Applied Date">{{ app.date_applied if app.date_applied else '-' }}</td>
                 <td class="table-actions-cell" data-label="Actions">
                   <div class="table-actions">
-                    <a
-                      href="/applications/{{ app.application_id }}"
-                      class="btn btn-ghost btn-sm"
-                      aria-label="View {{ app.job_title }} at {{ app.job_company }}"
-                    >
-                      <svg
-                        width="13"
-                        height="13"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                        aria-hidden="true"
-                      >
-                        <path d="M10 12.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z" />
-                        <path
-                          fill-rule="evenodd"
-                          d="M.664 10.59a1.651 1.651 0 010-1.186A10.004 10.004 0 0110 3c4.257 0 7.893 2.66 9.336 6.41.147.381.146.804 0 1.186A10.004 10.004 0 0110 17c-4.257 0-7.893-2.66-9.336-6.41zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
-                          clip-rule="evenodd"
-                        />
-                      </svg>
+                    <a href="/applications/{{ app.application_id }}" class="btn btn-ghost btn-sm" aria-label="View {{ app.job_title }} at {{ app.job_company }}">
+                      <svg width="13" height="13" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 12.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z"/><path fill-rule="evenodd" d="M.664 10.59a1.651 1.651 0 010-1.186A10.004 10.004 0 0110 3c4.257 0 7.893 2.66 9.336 6.41.147.381.146.804 0 1.186A10.004 10.004 0 0110 17c-4.257 0-7.893-2.66-9.336-6.41zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/></svg>
                       View
                     </a>
-                    <form
-                      method="POST"
-                      action="/application/{{ app.application_id }}/delete"
-                      style="display: inline"
-                    >
-                      <button
-                        type="button"
-                        class="btn btn-ghost btn-sm btn-icon"
-                        style="color: var(--danger)"
-                        data-confirm="Delete '{{ app.job_title }}' at {{ app.job_company }}? This cannot be undone."
-                        aria-label="Delete {{ app.job_title }}"
-                      >
-                        <svg
-                          width="14"
-                          height="14"
-                          viewBox="0 0 20 20"
-                          fill="currentColor"
-                          aria-hidden="true"
-                        >
-                          <path
-                            fill-rule="evenodd"
-                            d="M8.75 1A2.75 2.75 0 006 3.75v.443c-.795.077-1.584.176-2.365.298a.75.75 0 10.23 1.482l.149-.022.841 10.518A2.75 2.75 0 007.596 19h4.807a2.75 2.75 0 002.742-2.53l.841-10.52.149.023a.75.75 0 00.23-1.482A41.03 41.03 0 0014 4.193V3.75A2.75 2.75 0 0011.25 1h-2.5z"
-                            clip-rule="evenodd"
-                          />
-                        </svg>
+                    <form method="POST" action="/application/{{ app.application_id }}/delete" style="display:inline;">
+                      <button type="button" class="btn btn-ghost btn-sm btn-icon" style="color:var(--danger);" data-confirm="Delete '{{ app.job_title }}' at {{ app.job_company }}? This cannot be undone." aria-label="Delete {{ app.job_title }}">
+                        <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M8.75 1A2.75 2.75 0 006 3.75v.443c-.795.077-1.584.176-2.365.298a.75.75 0 10.23 1.482l.149-.022.841 10.518A2.75 2.75 0 007.596 19h4.807a2.75 2.75 0 002.742-2.53l.841-10.52.149.023a.75.75 0 00.23-1.482A41.03 41.03 0 0014 4.193V3.75A2.75 2.75 0 0011.25 1h-2.5z" clip-rule="evenodd"/></svg>
                       </button>
                     </form>
                   </div>
                 </td>
               </tr>
               {% endfor %}
-              <tr class="table-empty-row" style="display: none">
-                <td
-                  colspan="7"
-                  style="
-                    text-align: center;
-                    padding: var(--space-10);
-                    color: var(--text-muted);
-                    font-size: 0.875rem;
-                  "
-                >
-                  No results match your search.
-                </td>
+              <tr class="table-empty-row" style="display:none;">
+                <td colspan="7" style="text-align:center;padding:var(--space-10);color:var(--text-muted);font-size:0.875rem;">No results match your search.</td>
               </tr>
             </tbody>
           </table>
@@ -357,33 +172,11 @@ set stats.rejected = stats.rejected + 1 %}{% endif %} {% endfor %} {% endif %}
       {% else %}
       <div class="app-table-wrap" data-reveal>
         <div class="empty-state">
-          <img
-            src="/static/images/empty-state.svg"
-            alt=""
-            class="empty-state-img"
-            aria-hidden="true"
-          />
+          <img src="/static/images/empty-state.svg" alt="" class="empty-state-img" aria-hidden="true"/>
           <h2 class="empty-state-title">No applications yet</h2>
-          <p class="empty-state-desc">
-            Add your first job application to start building your command
-            center. Takes 30 seconds.
-          </p>
-          <a
-            href="/applications/create"
-            class="btn btn-primary btn-lg magnetic-wrap"
-          >
-            <svg
-              width="14"
-              height="14"
-              viewBox="0 0 12 12"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2.5"
-              stroke-linecap="round"
-              aria-hidden="true"
-            >
-              <path d="M6 1v10M1 6h10" />
-            </svg>
+          <p class="empty-state-desc">Add your first job application to start building your command center. Takes 30 seconds.</p>
+          <a href="/applications/create" class="btn btn-primary btn-lg magnetic-wrap">
+            <svg width="14" height="14" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M6 1v10M1 6h10"/></svg>
             Add Your First Application
           </a>
         </div>

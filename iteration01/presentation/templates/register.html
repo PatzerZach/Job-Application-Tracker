@@ -1,57 +1,20 @@
-{% extends "base.html" %} {% block title %}Create Account{% endblock %} {% block
-body %}
+{% extends "base.html" %}
+{% block title %}Create Account{% endblock %}
+
+{% block body %}
 <div id="scroll-progress" aria-hidden="true"></div>
 <div id="cursor-dot" aria-hidden="true"></div>
 <div id="cursor-ring" aria-hidden="true"></div>
 
 <a href="/" class="auth-back" aria-label="Back to home">
-  <svg
-    viewBox="0 0 16 16"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="2"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-    aria-hidden="true"
-  >
-    <path d="M10 12L6 8l4-4" />
-  </svg>
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 12L6 8l4-4"/></svg>
   Back
 </a>
 
-<div
-  style="
-    position: fixed;
-    top: var(--space-5);
-    right: var(--space-6);
-    z-index: 10;
-  "
->
+<div style="position:fixed;top:var(--space-5);right:var(--space-6);z-index:10;">
   <button class="theme-toggle" aria-label="Toggle theme">
-    <svg
-      class="icon-sun"
-      viewBox="0 0 20 20"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="1.75"
-      stroke-linecap="round"
-      aria-hidden="true"
-    >
-      <circle cx="10" cy="10" r="4" />
-      <path
-        d="M10 2v2M10 16v2M2 10h2M16 10h2M4.22 4.22l1.42 1.42M14.36 14.36l1.42 1.42M14.36 5.64l1.42-1.42M4.22 15.78l1.42-1.42"
-      />
-    </svg>
-    <svg
-      class="icon-moon"
-      viewBox="0 0 20 20"
-      fill="currentColor"
-      aria-hidden="true"
-    >
-      <path
-        d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
-      />
-    </svg>
+    <svg class="icon-sun" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><circle cx="10" cy="10" r="4"/><path d="M10 2v2M10 16v2M2 10h2M16 10h2M4.22 4.22l1.42 1.42M14.36 14.36l1.42 1.42M14.36 5.64l1.42-1.42M4.22 15.78l1.42-1.42"/></svg>
+    <svg class="icon-moon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/></svg>
   </button>
 </div>
 
@@ -60,43 +23,14 @@ body %}
   <div class="auth-bg-grid"></div>
 </div>
 
-<div class="auth-page" style="padding: 36px var(--space-4)">
-  <div class="auth-card tilt-card" style="max-width: 460px">
-    <div
-      aria-hidden="true"
-      style="
-        position: absolute;
-        top: 0;
-        left: 15%;
-        right: 15%;
-        height: 1px;
-        background: linear-gradient(
-          90deg,
-          transparent,
-          var(--accent-glow),
-          transparent
-        );
-      "
-    ></div>
+<div class="auth-page" style="padding:36px var(--space-4);">
+  <div class="auth-card tilt-card" style="max-width:460px;">
+    <div aria-hidden="true" style="position:absolute;top:0;left:15%;right:15%;height:1px;background:linear-gradient(90deg,transparent,var(--accent-glow),transparent);"></div>
 
     <div class="auth-logo">
-      <a
-        href="/"
-        class="sidebar-logo"
-        style="font-size: 1.3rem"
-        aria-label="AppsTrackr"
-      >
-        <div
-          class="sidebar-logo-icon"
-          style="width: 36px; height: 36px"
-          aria-hidden="true"
-        >
-          <img
-            src="/static/images/logo-placeholder.svg"
-            alt=""
-            width="20"
-            height="20"
-          />
+      <a href="/" class="sidebar-logo" style="font-size:1.3rem;" aria-label="AppsTrackr">
+        <div class="sidebar-logo-icon" style="width:36px;height:36px;" aria-hidden="true">
+          <img src="/static/images/logo-placeholder.svg" alt="" width="20" height="20"/>
         </div>
         AppsTrackr
       </a>
@@ -109,18 +43,7 @@ body %}
 
     {% if error %}
     <div class="alert alert-error" role="alert" data-auto-dismiss>
-      <svg
-        class="alert-icon"
-        viewBox="0 0 20 20"
-        fill="currentColor"
-        aria-hidden="true"
-      >
-        <path
-          fill-rule="evenodd"
-          d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-5a.75.75 0 01.75.75v4.5a.75.75 0 01-1.5 0v-4.5A.75.75 0 0110 5zm0 10a1 1 0 100-2 1 1 0 000 2z"
-          clip-rule="evenodd"
-        />
-      </svg>
+      <svg class="alert-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-5a.75.75 0 01.75.75v4.5a.75.75 0 01-1.5 0v-4.5A.75.75 0 0110 5zm0 10a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/></svg>
       <span>{{ error }}</span>
       <button class="alert-close" aria-label="Dismiss">x</button>
     </div>
@@ -128,174 +51,60 @@ body %}
 
     <form method="POST" action="/register" data-validate novalidate>
       <div class="form-group">
-        <label class="form-label" for="name"
-          >Full Name
-          <span style="color: var(--danger)" aria-label="required"
-            >*</span
-          ></label
-        >
-        <input
-          class="form-control"
-          type="text"
-          id="name"
-          name="name"
-          placeholder="Alex Johnson"
-          value="{{ name or '' }}"
-          required
-          autocomplete="name"
-          autofocus
-        />
+        <label class="form-label" for="name">Full Name <span style="color:var(--danger);" aria-label="required">*</span></label>
+        <input class="form-control" type="text" id="name" name="name" placeholder="Alex Johnson" value="{{ name or '' }}" required autocomplete="name" autofocus/>
         <span class="form-error-text">Required.</span>
       </div>
 
       <div class="form-group">
-        <label class="form-label" for="username"
-          >Username
-          <span style="color: var(--danger)" aria-label="required"
-            >*</span
-          ></label
-        >
-        <input
-          class="form-control"
-          type="text"
-          id="username"
-          name="username"
-          placeholder="alexjohnson"
-          value="{{ username or '' }}"
-          required
-          autocomplete="username"
-          pattern="[a-zA-Z0-9_\-]{3,32}"
-        />
-        <span class="form-hint"
-          >3-32 chars · letters, numbers, _ and - only</span
-        >
+        <label class="form-label" for="username">Username <span style="color:var(--danger);" aria-label="required">*</span></label>
+        <input class="form-control" type="text" id="username" name="username" placeholder="alexjohnson" value="{{ username or '' }}" required autocomplete="username" pattern="[a-zA-Z0-9_\-]{3,32}"/>
+        <span class="form-hint">3-32 chars · letters, numbers, _ and - only</span>
         <span class="form-error-text">Username is required.</span>
       </div>
 
       <div class="form-group">
-        <label class="form-label" for="email"
-          >Email
-          <span style="color: var(--danger)" aria-label="required"
-            >*</span
-          ></label
-        >
-        <input
-          class="form-control"
-          type="email"
-          id="email"
-          name="email"
-          placeholder="alex@example.com"
-          value="{{ email or '' }}"
-          required
-          autocomplete="email"
-        />
+        <label class="form-label" for="email">Email <span style="color:var(--danger);" aria-label="required">*</span></label>
+        <input class="form-control" type="email" id="email" name="email" placeholder="alex@example.com" value="{{ email or '' }}" required autocomplete="email"/>
         <span class="form-error-text">A valid email is required.</span>
       </div>
 
       <div class="form-group">
-        <label class="form-label" for="password"
-          >Password
-          <span style="color: var(--danger)" aria-label="required"
-            >*</span
-          ></label
-        >
-        <div style="position: relative">
-          <input
-            class="form-control"
-            type="password"
-            id="password"
-            name="password"
-            placeholder="Password"
-            required
-            autocomplete="new-password"
-            minlength="8"
-            style="padding-right: 46px"
-          />
-          <button
-            type="button"
-            id="toggle-pw"
-            aria-label="Toggle password visibility"
-            style="
-              position: absolute;
-              right: 12px;
-              top: 50%;
-              transform: translateY(-50%);
-              background: none;
-              border: none;
-              color: var(--text-muted);
-              padding: 4px;
-              display: flex;
-              align-items: center;
-              transition: color var(--transition-fast);
-            "
-          >
-            <svg viewBox="0 0 20 20" fill="currentColor" width="17" height="17">
-              <path d="M10 12.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z" />
-              <path
-                fill-rule="evenodd"
-                d="M.664 10.59a1.651 1.651 0 010-1.186A10.004 10.004 0 0110 3c4.257 0 7.893 2.66 9.336 6.41.147.381.146.804 0 1.186A10.004 10.004 0 0110 17c-4.257 0-7.893-2.66-9.336-6.41zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
-                clip-rule="evenodd"
-              />
-            </svg>
+        <label class="form-label" for="password">Password <span style="color:var(--danger);" aria-label="required">*</span></label>
+        <div style="position:relative;">
+          <input class="form-control" type="password" id="password" name="password" placeholder="Password" required autocomplete="new-password" minlength="8" style="padding-right:46px;"/>
+          <button type="button" id="toggle-pw" aria-label="Toggle password visibility" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--text-muted);padding:4px;display:flex;align-items:center;transition:color var(--transition-fast);">
+            <svg viewBox="0 0 20 20" fill="currentColor" width="17" height="17"><path d="M10 12.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z"/><path fill-rule="evenodd" d="M.664 10.59a1.651 1.651 0 010-1.186A10.004 10.004 0 0110 3c4.257 0 7.893 2.66 9.336 6.41.147.381.146.804 0 1.186A10.004 10.004 0 0110 17c-4.257 0-7.893-2.66-9.336-6.41zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/></svg>
           </button>
         </div>
         <span class="form-hint">Minimum 8 characters</span>
-        <span class="form-error-text"
-          >Password must be at least 8 characters.</span
-        >
+        <span class="form-error-text">Password must be at least 8 characters.</span>
       </div>
 
-      <div
-        id="pw-strength"
-        style="display: none; margin-top: -10px; margin-bottom: var(--space-5)"
-      >
-        <div class="pw-strength-bar-track">
-          <div class="pw-strength-bar-fill" id="pw-strength-bar"></div>
-        </div>
-        <span
-          id="pw-strength-label"
-          style="
-            font-size: 0.72rem;
-            font-family: var(--font-mono);
-            color: var(--text-muted);
-          "
-        ></span>
+      <div id="pw-strength" style="display:none;margin-top:-10px;margin-bottom:var(--space-5);">
+        <div class="pw-strength-bar-track"><div class="pw-strength-bar-fill" id="pw-strength-bar"></div></div>
+        <span id="pw-strength-label" style="font-size:0.72rem;font-family:var(--font-mono);color:var(--text-muted);"></span>
       </div>
 
-      <button
-        type="submit"
-        class="btn btn-primary btn-block magnetic-wrap"
-        style="height: 46px; font-size: 0.95rem; margin-top: var(--space-2)"
-      >
-        <svg
-          width="15"
-          height="15"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-          aria-hidden="true"
-        >
-          <path
-            d="M10 3a7 7 0 100 14A7 7 0 0010 3zm1 4a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
-          />
-        </svg>
+      <button type="submit" class="btn btn-primary btn-block magnetic-wrap" style="height:46px;font-size:0.95rem;margin-top:var(--space-2);">
+        <svg width="15" height="15" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 3a7 7 0 100 14A7 7 0 0010 3zm1 4a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"/></svg>
         Create Account
       </button>
     </form>
 
-    <p class="auth-footer-text">
-      Already have an account? <a href="/login">Sign in &rarr;</a>
-    </p>
+    <p class="auth-footer-text">Already have an account? <a href="/login">Sign in &rarr;</a></p>
   </div>
 </div>
-{% endblock %} {% block scripts %}
+{% endblock %}
+
+{% block scripts %}
 <script>
-  const btn = document.getElementById("toggle-pw");
-  const inp = document.getElementById("password");
-  if (btn && inp)
-    btn.addEventListener("click", () => {
-      const show = inp.type === "text";
-      inp.type = show ? "password" : "text";
-      btn.style.color = show ? "var(--text-muted)" : "var(--accent)";
-    });
+  const btn = document.getElementById('toggle-pw');
+  const inp = document.getElementById('password');
+  if (btn && inp) btn.addEventListener('click', () => {
+    const show = inp.type === 'text';
+    inp.type = show ? 'password' : 'text';
+    btn.style.color = show ? 'var(--text-muted)' : 'var(--accent)';
+  });
 </script>
 {% endblock %}

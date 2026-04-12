@@ -1,5 +1,7 @@
-{% extends "base.html" %} {% block title %}AppsTrackr - Job Application
-Tracker{% endblock %} {% block body %}
+{% extends "base.html" %}
+{% block title %}AppsTrackr - Job Application Tracker{% endblock %}
+
+{% block body %}
 <div id="scroll-progress" aria-hidden="true"></div>
 <div id="cursor-dot" aria-hidden="true"></div>
 <div id="cursor-ring" aria-hidden="true"></div>
@@ -7,12 +9,7 @@ Tracker{% endblock %} {% block body %}
 <nav class="pub-nav" role="navigation" aria-label="Main navigation">
   <a href="/" class="nav-logo" aria-label="AppsTrackr home">
     <div class="nav-logo-icon" aria-hidden="true">
-      <img
-        src="/static/images/logo-placeholder.svg"
-        alt=""
-        width="20"
-        height="20"
-      />
+      <img src="/static/images/logo-placeholder.svg" alt="" width="20" height="20"/>
     </div>
     AppsTrackr
   </a>
@@ -24,35 +21,11 @@ Tracker{% endblock %} {% block body %}
 
   <div class="nav-actions">
     <button class="theme-toggle" aria-label="Toggle light/dark theme">
-      <svg
-        class="icon-sun"
-        viewBox="0 0 20 20"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.75"
-        stroke-linecap="round"
-        aria-hidden="true"
-      >
-        <circle cx="10" cy="10" r="4" />
-        <path
-          d="M10 2v2M10 16v2M2 10h2M16 10h2M4.22 4.22l1.42 1.42M14.36 14.36l1.42 1.42M14.36 5.64l1.42-1.42M4.22 15.78l1.42-1.42"
-        />
-      </svg>
-      <svg
-        class="icon-moon"
-        viewBox="0 0 20 20"
-        fill="currentColor"
-        aria-hidden="true"
-      >
-        <path
-          d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
-        />
-      </svg>
+      <svg class="icon-sun" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><circle cx="10" cy="10" r="4"/><path d="M10 2v2M10 16v2M2 10h2M16 10h2M4.22 4.22l1.42 1.42M14.36 14.36l1.42 1.42M14.36 5.64l1.42-1.42M4.22 15.78l1.42-1.42"/></svg>
+      <svg class="icon-moon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/></svg>
     </button>
     <a href="/login" class="btn btn-glass btn-sm magnetic-wrap">Log in</a>
-    <a href="/register" class="btn btn-primary btn-sm magnetic-wrap"
-      >Get Started</a
-    >
+    <a href="/register" class="btn btn-primary btn-sm magnetic-wrap">Get Started</a>
   </div>
 </nav>
 
@@ -66,7 +39,7 @@ Tracker{% endblock %} {% block body %}
     <div class="hero-orb hero-orb-3" data-parallax="0.04"></div>
   </div>
 
-  <div class="container" style="position: relative; z-index: 2">
+  <div class="container" style="position:relative;z-index:2;">
     <div class="hero-content">
       <div class="hero-eyebrow" data-reveal>
         <span class="hero-eyebrow-dot" aria-hidden="true"></span>
@@ -74,176 +47,57 @@ Tracker{% endblock %} {% block body %}
       </div>
 
       <h1 class="hero-title" id="hero-title">
-        <span data-reveal data-reveal-delay="1" style="display: block"
-          >Track Every Job.</span
-        >
-        <span
-          class="animated-gradient-text"
-          data-scramble
-          data-text="Land Your Dream."
-          data-reveal
-          data-reveal-delay="2"
-          style="display: block"
-          >Land Your Dream.</span
-        >
+        <span data-reveal data-reveal-delay="1" style="display:block;">Track Every Job.</span>
+        <span class="animated-gradient-text" data-scramble data-text="Land Your Dream." data-reveal data-reveal-delay="2" style="display:block;">Land Your Dream.</span>
       </h1>
 
       <p class="hero-subtitle" data-reveal data-reveal-delay="3">
         Stop losing track of where you applied. AppsTrackr is a precision
         <span class="word-highlight">command center</span>
-        for your job search - organize applications, manage documents, and stay
-        ahead every step.
+        for your job search - organize applications, manage documents, and stay ahead every step.
       </p>
 
       <div class="hero-actions" data-reveal data-reveal-delay="4">
         <a href="/register" class="btn btn-primary btn-lg magnetic-wrap">
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            aria-hidden="true"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z"
-              clip-rule="evenodd"
-            />
-          </svg>
+          <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z" clip-rule="evenodd"/></svg>
           Start for Free
         </a>
         <a href="/login" class="btn btn-glass btn-lg magnetic-wrap">
           Sign In
-          <svg
-            width="14"
-            height="14"
-            viewBox="0 0 14 14"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            aria-hidden="true"
-          >
-            <path d="M1 7h12M8 2l5 5-5 5" />
-          </svg>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M1 7h12M8 2l5 5-5 5"/></svg>
         </a>
       </div>
 
-      <div
-        class="hero-social-proof"
-        data-reveal
-        data-reveal-delay="5"
-        role="list"
-        aria-label="Key stats"
-      >
-        <div role="listitem">
-          <div class="hero-stat-num"><span data-count="5">0</span></div>
-          <div class="hero-stat-label">Status Stages</div>
-        </div>
-        <div
-          style="width: 1px; height: 36px; background: var(--border)"
-          aria-hidden="true"
-        ></div>
-        <div role="listitem">
-          <div class="hero-stat-num" aria-label="Unlimited">∞</div>
-          <div class="hero-stat-label">Applications</div>
-        </div>
-        <div
-          style="width: 1px; height: 36px; background: var(--border)"
-          aria-hidden="true"
-        ></div>
-        <div role="listitem">
-          <div class="hero-stat-num">1</div>
-          <div class="hero-stat-label">Dashboard</div>
-        </div>
+      <div class="hero-social-proof" data-reveal data-reveal-delay="5" role="list" aria-label="Key stats">
+        <div role="listitem"><div class="hero-stat-num"><span data-count="5">0</span></div><div class="hero-stat-label">Status Stages</div></div>
+        <div style="width:1px;height:36px;background:var(--border);" aria-hidden="true"></div>
+        <div role="listitem"><div class="hero-stat-num" aria-label="Unlimited">∞</div><div class="hero-stat-label">Applications</div></div>
+        <div style="width:1px;height:36px;background:var(--border);" aria-hidden="true"></div>
+        <div role="listitem"><div class="hero-stat-num">1</div><div class="hero-stat-label">Dashboard</div></div>
       </div>
     </div>
 
     <div class="hero-dashboard" aria-hidden="true">
       <div class="hero-dashboard-inner hero-card-3d-idle">
-        <img
-          src="/static/images/hero-illustration.svg"
-          alt=""
-          width="540"
-          height="460"
-          style="
-            width: 100%;
-            filter: drop-shadow(0 40px 80px rgba(0, 0, 0, 0.7))
-              drop-shadow(0 0 60px rgba(240, 200, 74, 0.12));
-          "
-        />
+        <img src="/static/images/hero-illustration.svg" alt="" width="540" height="460" style="width:100%;filter:drop-shadow(0 40px 80px rgba(0,0,0,0.7)) drop-shadow(0 0 60px rgba(240,200,74,0.12));"/>
       </div>
     </div>
   </div>
 </section>
 
 <div class="glow-divider" aria-hidden="true"></div>
-<div
-  style="
-    background: var(--bg-secondary);
-    overflow: hidden;
-    padding: 13px 0;
-    white-space: nowrap;
-  "
-  aria-hidden="true"
->
-  <div
-    style="
-      display: inline-flex;
-      animation: ticker 32s linear infinite;
-      gap: var(--space-12);
-    "
-  >
-    {% set items = ['Track Applications','Upload Resumes','Cover
-    Letters','Status Updates','Interview Prep','Offer Management','Job
-    Search','Career Growth','Document Vault'] %} {% for item in items %}
-    <span
-      style="
-        font-family: var(--font-mono);
-        font-size: 0.7rem;
-        text-transform: uppercase;
-        letter-spacing: 0.12em;
-        color: var(--text-muted);
-        display: inline-flex;
-        align-items: center;
-        gap: var(--space-3);
-      "
-    >
-      <span
-        style="
-          width: 4px;
-          height: 4px;
-          border-radius: 50%;
-          background: var(--accent);
-          box-shadow: 0 0 6px var(--accent-glow);
-          display: inline-block;
-        "
-      ></span>
+<div style="background:var(--bg-secondary);overflow:hidden;padding:13px 0;white-space:nowrap;" aria-hidden="true">
+  <div style="display:inline-flex;animation:ticker 32s linear infinite;gap:var(--space-12);">
+    {% set items = ['Track Applications','Upload Resumes','Cover Letters','Status Updates','Interview Prep','Offer Management','Job Search','Career Growth','Document Vault'] %}
+    {% for item in items %}
+    <span style="font-family:var(--font-mono);font-size:0.7rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-muted);display:inline-flex;align-items:center;gap:var(--space-3);">
+      <span style="width:4px;height:4px;border-radius:50%;background:var(--accent);box-shadow:0 0 6px var(--accent-glow);display:inline-block;"></span>
       {{ item }}
     </span>
-    {% endfor %} {% for item in items %}
-    <span
-      style="
-        font-family: var(--font-mono);
-        font-size: 0.7rem;
-        text-transform: uppercase;
-        letter-spacing: 0.12em;
-        color: var(--text-muted);
-        display: inline-flex;
-        align-items: center;
-        gap: var(--space-3);
-      "
-    >
-      <span
-        style="
-          width: 4px;
-          height: 4px;
-          border-radius: 50%;
-          background: var(--accent);
-          box-shadow: 0 0 6px var(--accent-glow);
-          display: inline-block;
-        "
-      ></span>
+    {% endfor %}
+    {% for item in items %}
+    <span style="font-family:var(--font-mono);font-size:0.7rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-muted);display:inline-flex;align-items:center;gap:var(--space-3);">
+      <span style="width:4px;height:4px;border-radius:50%;background:var(--accent);box-shadow:0 0 6px var(--accent-glow);display:inline-block;"></span>
       {{ item }}
     </span>
     {% endfor %}
@@ -253,12 +107,8 @@ Tracker{% endblock %} {% block body %}
 
 <style>
   @keyframes ticker {
-    from {
-      transform: translateX(0);
-    }
-    to {
-      transform: translateX(-50%);
-    }
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
   }
 </style>
 
@@ -266,337 +116,50 @@ Tracker{% endblock %} {% block body %}
   <div class="container">
     <div class="section-intro" data-reveal>
       <span class="section-label">Features</span>
-      <h2 class="section-title" id="features-title">
-        Built for serious
-        <span class="animated-gradient-text">job seekers</span>
-      </h2>
-      <p class="section-subtitle" style="margin: 0 auto">
-        Every tool you need from first click to signed offer - organized, fast,
-        and designed to keep you ahead.
-      </p>
+      <h2 class="section-title" id="features-title">Built for serious <span class="animated-gradient-text">job seekers</span></h2>
+      <p class="section-subtitle" style="margin:0 auto;">Every tool you need from first click to signed offer - organized, fast, and designed to keep you ahead.</p>
     </div>
 
     <div class="features-bento">
-      <div
-        class="bento-card bento-card-wide tilt-card shimmer"
-        data-reveal
-        data-reveal-delay="1"
-      >
+      <div class="bento-card bento-card-wide tilt-card shimmer" data-reveal data-reveal-delay="1">
         <div class="bento-card-number" aria-hidden="true">01</div>
-        <div class="feature-icon" aria-hidden="true">
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <rect x="3" y="4" width="18" height="18" rx="2" />
-            <path d="M16 2v4M8 2v4M3 10h18" />
-            <path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01" />
-          </svg>
-        </div>
-        <h3 class="feature-title" style="font-size: 1.2rem">
-          Track Every Application
-        </h3>
-        <p class="feature-desc">
-          Log every position with company, role, date applied, job description,
-          and contact info in one dashboard.
-        </p>
+        <div class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg></div>
+        <h3 class="feature-title" style="font-size:1.2rem;">Track Every Application</h3>
+        <p class="feature-desc">Log every position with company, role, date applied, job description, and contact info in one dashboard.</p>
       </div>
 
-      <div class="bento-card tilt-card" data-reveal data-reveal-delay="2">
-        <div class="bento-card-number" aria-hidden="true">02</div>
-        <div class="feature-icon" aria-hidden="true">
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
-          </svg>
-        </div>
-        <h3 class="feature-title">Live Status Tracking</h3>
-        <p class="feature-desc">
-          Five stages from Not Applied to Rejected with color-coded status
-          visibility.
-        </p>
-      </div>
-      <div class="bento-card tilt-card" data-reveal data-reveal-delay="1">
-        <div class="bento-card-number" aria-hidden="true">03</div>
-        <div class="feature-icon" aria-hidden="true">
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
-            <polyline points="14 2 14 8 20 8" />
-            <line x1="16" y1="13" x2="8" y2="13" />
-            <line x1="16" y1="17" x2="8" y2="17" />
-          </svg>
-        </div>
-        <h3 class="feature-title">Resume Library</h3>
-        <p class="feature-desc">
-          Upload multiple resume versions and download them instantly when
-          needed.
-        </p>
-      </div>
-      <div class="bento-card tilt-card" data-reveal data-reveal-delay="2">
-        <div class="bento-card-number" aria-hidden="true">04</div>
-        <div class="feature-icon" aria-hidden="true">
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path
-              d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
-            />
-            <polyline points="22,6 12,13 2,6" />
-          </svg>
-        </div>
-        <h3 class="feature-title">Cover Letter Vault</h3>
-        <p class="feature-desc">
-          Store tailored cover letters and keep them organized for future
-          applications.
-        </p>
-      </div>
-      <div class="bento-card tilt-card" data-reveal data-reveal-delay="3">
-        <div class="bento-card-number" aria-hidden="true">05</div>
-        <div class="feature-icon" aria-hidden="true">
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z" />
-            <path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z" />
-          </svg>
-        </div>
-        <h3 class="feature-title">Full Context</h3>
-        <p class="feature-desc">
-          Keep descriptions, contacts, and progress history together for every
-          opportunity.
-        </p>
-      </div>
-      <div
-        class="bento-card bento-card-wide tilt-card shimmer"
-        data-reveal
-        data-reveal-delay="2"
-      >
-        <div class="bento-card-number" aria-hidden="true">06</div>
-        <div class="feature-icon" aria-hidden="true">
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <rect x="3" y="3" width="7" height="7" />
-            <rect x="14" y="3" width="7" height="7" />
-            <rect x="14" y="14" width="7" height="7" />
-            <rect x="3" y="14" width="7" height="7" />
-          </svg>
-        </div>
-        <h3 class="feature-title" style="font-size: 1.2rem">
-          Full Command Dashboard
-        </h3>
-        <p class="feature-desc">
-          Searchable tables, live stats, and one-click details keep your
-          workflow clear and fast.
-        </p>
-      </div>
+      <div class="bento-card tilt-card" data-reveal data-reveal-delay="2"><div class="bento-card-number" aria-hidden="true">02</div><div class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><h3 class="feature-title">Live Status Tracking</h3><p class="feature-desc">Five stages from Not Applied to Rejected with color-coded status visibility.</p></div>
+      <div class="bento-card tilt-card" data-reveal data-reveal-delay="1"><div class="bento-card-number" aria-hidden="true">03</div><div class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div><h3 class="feature-title">Resume Library</h3><p class="feature-desc">Upload multiple resume versions and download them instantly when needed.</p></div>
+      <div class="bento-card tilt-card" data-reveal data-reveal-delay="2"><div class="bento-card-number" aria-hidden="true">04</div><div class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><h3 class="feature-title">Cover Letter Vault</h3><p class="feature-desc">Store tailored cover letters and keep them organized for future applications.</p></div>
+      <div class="bento-card tilt-card" data-reveal data-reveal-delay="3"><div class="bento-card-number" aria-hidden="true">05</div><div class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg></div><h3 class="feature-title">Full Context</h3><p class="feature-desc">Keep descriptions, contacts, and progress history together for every opportunity.</p></div>
+      <div class="bento-card bento-card-wide tilt-card shimmer" data-reveal data-reveal-delay="2"><div class="bento-card-number" aria-hidden="true">06</div><div class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div><h3 class="feature-title" style="font-size:1.2rem;">Full Command Dashboard</h3><p class="feature-desc">Searchable tables, live stats, and one-click details keep your workflow clear and fast.</p></div>
     </div>
   </div>
 </section>
 
-<section
-  id="how-it-works"
-  style="
-    padding: var(--space-24) 0;
-    background: var(--bg-secondary);
-    position: relative;
-    overflow: hidden;
-  "
-  aria-labelledby="hiw-title"
->
-  <div
-    aria-hidden="true"
-    style="
-      position: absolute;
-      top: -120px;
-      right: -80px;
-      width: 500px;
-      height: 500px;
-      border-radius: 50%;
-      background: radial-gradient(
-        circle,
-        rgba(240, 200, 74, 0.05) 0%,
-        transparent 65%
-      );
-      pointer-events: none;
-    "
-    data-parallax="0.07"
-  ></div>
-  <div
-    aria-hidden="true"
-    style="
-      position: absolute;
-      bottom: -100px;
-      left: -60px;
-      width: 400px;
-      height: 400px;
-      border-radius: 50%;
-      background: radial-gradient(
-        circle,
-        rgba(34, 211, 238, 0.04) 0%,
-        transparent 65%
-      );
-      pointer-events: none;
-    "
-    data-parallax="0.05"
-  ></div>
+<section id="how-it-works" style="padding:var(--space-24) 0;background:var(--bg-secondary);position:relative;overflow:hidden;" aria-labelledby="hiw-title">
+  <div aria-hidden="true" style="position:absolute;top:-120px;right:-80px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(240,200,74,0.05) 0%,transparent 65%);pointer-events:none;" data-parallax="0.07"></div>
+  <div aria-hidden="true" style="position:absolute;bottom:-100px;left:-60px;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(34,211,238,0.04) 0%,transparent 65%);pointer-events:none;" data-parallax="0.05"></div>
   <div class="container">
     <div class="hiw-layout">
       <div data-reveal="left">
         <span class="section-label">How It Works</span>
-        <h2
-          class="section-title"
-          id="hiw-title"
-          style="margin-bottom: var(--space-10)"
-        >
-          Three steps to a better job search
-        </h2>
+        <h2 class="section-title" id="hiw-title" style="margin-bottom:var(--space-10);">Three steps to a better job search</h2>
         <div class="timeline">
-          <div class="timeline-item" data-reveal data-reveal-delay="1">
-            <div class="timeline-dot" aria-hidden="true"></div>
-            <div style="padding-bottom: var(--space-2)">
-              <h3
-                style="
-                  font-family: var(--font-display);
-                  font-size: 1.05rem;
-                  font-weight: 700;
-                  margin-bottom: var(--space-2);
-                "
-              >
-                Create Your Account
-              </h3>
-              <p
-                style="
-                  font-size: 0.875rem;
-                  color: var(--text-secondary);
-                  line-height: 1.75;
-                "
-              >
-                Sign up in seconds and get a clean dashboard for your job
-                search.
-              </p>
-            </div>
-          </div>
-          <div class="timeline-item" data-reveal data-reveal-delay="2">
-            <div class="timeline-dot" aria-hidden="true"></div>
-            <div style="padding-bottom: var(--space-2)">
-              <h3
-                style="
-                  font-family: var(--font-display);
-                  font-size: 1.05rem;
-                  font-weight: 700;
-                  margin-bottom: var(--space-2);
-                "
-              >
-                Log Your Applications
-              </h3>
-              <p
-                style="
-                  font-size: 0.875rem;
-                  color: var(--text-secondary);
-                  line-height: 1.75;
-                "
-              >
-                Add each job with role, company, description, and contacts.
-              </p>
-            </div>
-          </div>
-          <div
-            class="timeline-item"
-            style="margin-bottom: 0"
-            data-reveal
-            data-reveal-delay="3"
-          >
-            <div class="timeline-dot" aria-hidden="true"></div>
-            <div>
-              <h3
-                style="
-                  font-family: var(--font-display);
-                  font-size: 1.05rem;
-                  font-weight: 700;
-                  margin-bottom: var(--space-2);
-                "
-              >
-                Stay Ahead
-              </h3>
-              <p
-                style="
-                  font-size: 0.875rem;
-                  color: var(--text-secondary);
-                  line-height: 1.75;
-                "
-              >
-                Update statuses as you progress and keep your documents close at
-                hand.
-              </p>
-            </div>
-          </div>
+          <div class="timeline-item" data-reveal data-reveal-delay="1"><div class="timeline-dot" aria-hidden="true"></div><div style="padding-bottom:var(--space-2);"><h3 style="font-family:var(--font-display);font-size:1.05rem;font-weight:700;margin-bottom:var(--space-2);">Create Your Account</h3><p style="font-size:0.875rem;color:var(--text-secondary);line-height:1.75;">Sign up in seconds and get a clean dashboard for your job search.</p></div></div>
+          <div class="timeline-item" data-reveal data-reveal-delay="2"><div class="timeline-dot" aria-hidden="true"></div><div style="padding-bottom:var(--space-2);"><h3 style="font-family:var(--font-display);font-size:1.05rem;font-weight:700;margin-bottom:var(--space-2);">Log Your Applications</h3><p style="font-size:0.875rem;color:var(--text-secondary);line-height:1.75;">Add each job with role, company, description, and contacts.</p></div></div>
+          <div class="timeline-item" style="margin-bottom:0;" data-reveal data-reveal-delay="3"><div class="timeline-dot" aria-hidden="true"></div><div><h3 style="font-family:var(--font-display);font-size:1.05rem;font-weight:700;margin-bottom:var(--space-2);">Stay Ahead</h3><p style="font-size:0.875rem;color:var(--text-secondary);line-height:1.75;">Update statuses as you progress and keep your documents close at hand.</p></div></div>
         </div>
       </div>
 
       <div class="hiw-card-stack" data-reveal="right">
-        {% for step in [('01','Seconds to sign
-        up','rgba(240,200,74,0.1)','var(--accent)'),('∞','Applications you can
-        track','rgba(34,211,238,0.08)','var(--cyan)'),('100%','Free,
-        always','rgba(74,222,128,0.08)','var(--success)')] %}
-        <div
-          class="step-card tilt-card"
-          style="text-align: left; padding: var(--space-6)"
-        >
-          <div style="display: flex; align-items: center; gap: var(--space-4)">
-            <div
-              class="step-num"
-              style="flex-shrink:0;background:{{ step[2] }};border-color:{{ step[3] }};color:{{ step[3] }};box-shadow:0 0 24px {{ step[2] }};"
-            >
-              {{ step[0] }}
-            </div>
+        {% for step in [('01','Seconds to sign up','rgba(240,200,74,0.1)','var(--accent)'),('∞','Applications you can track','rgba(34,211,238,0.08)','var(--cyan)'),('100%','Free, always','rgba(74,222,128,0.08)','var(--success)')] %}
+        <div class="step-card tilt-card" style="text-align:left;padding:var(--space-6);">
+          <div style="display:flex;align-items:center;gap:var(--space-4);">
+            <div class="step-num" style="flex-shrink:0;background:{{ step[2] }};border-color:{{ step[3] }};color:{{ step[3] }};box-shadow:0 0 24px {{ step[2] }};">{{ step[0] }}</div>
             <div>
-              <div
-                style="
-                  font-family: var(--font-display);
-                  font-size: 1.25rem;
-                  font-weight: 800;
-                  color: var(--text-primary);
-                  letter-spacing: -0.03em;
-                "
-              >
-                {{ step[0] }}
-              </div>
-              <div style="font-size: 0.875rem; color: var(--text-secondary)">
-                {{ step[1] }}
-              </div>
+              <div style="font-family:var(--font-display);font-size:1.25rem;font-weight:800;color:var(--text-primary);letter-spacing:-0.03em;">{{ step[0] }}</div>
+              <div style="font-size:0.875rem;color:var(--text-secondary);">{{ step[1] }}</div>
             </div>
           </div>
         </div>
@@ -610,50 +173,12 @@ Tracker{% endblock %} {% block body %}
   <div class="container">
     <div class="cta-box tilt-card shimmer" data-tilt="5">
       <div class="cta-box-gradient" aria-hidden="true"></div>
-      <div
-        aria-hidden="true"
-        style="
-          position: absolute;
-          top: -40px;
-          right: 60px;
-          width: 120px;
-          height: 120px;
-          border-radius: 50%;
-          background: radial-gradient(
-            circle,
-            rgba(240, 200, 74, 0.12),
-            transparent 70%
-          );
-          pointer-events: none;
-        "
-      ></div>
-      <div
-        aria-hidden="true"
-        style="
-          position: absolute;
-          bottom: -30px;
-          left: 40px;
-          width: 90px;
-          height: 90px;
-          border-radius: 50%;
-          background: radial-gradient(
-            circle,
-            rgba(34, 211, 238, 0.08),
-            transparent 70%
-          );
-          pointer-events: none;
-        "
-      ></div>
-      <h2 class="cta-title" id="cta-title">
-        Ready to take <span class="animated-gradient-text">control</span>?
-      </h2>
-      <p class="cta-subtitle">
-        Start tracking for free - no credit card, no catch.
-      </p>
+      <div aria-hidden="true" style="position:absolute;top:-40px;right:60px;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,rgba(240,200,74,0.12),transparent 70%);pointer-events:none;"></div>
+      <div aria-hidden="true" style="position:absolute;bottom:-30px;left:40px;width:90px;height:90px;border-radius:50%;background:radial-gradient(circle,rgba(34,211,238,0.08),transparent 70%);pointer-events:none;"></div>
+      <h2 class="cta-title" id="cta-title">Ready to take <span class="animated-gradient-text">control</span>?</h2>
+      <p class="cta-subtitle">Start tracking for free - no credit card, no catch.</p>
       <div class="cta-actions">
-        <a href="/register" class="btn btn-primary btn-lg magnetic-wrap"
-          >Create Free Account</a
-        >
+        <a href="/register" class="btn btn-primary btn-lg magnetic-wrap">Create Free Account</a>
         <a href="/login" class="btn btn-glass btn-lg magnetic-wrap">Sign In</a>
       </div>
     </div>
@@ -663,46 +188,16 @@ Tracker{% endblock %} {% block body %}
 <footer class="pub-footer" role="contentinfo">
   <div class="container">
     <div class="footer-inner">
-      <a
-        href="/"
-        class="nav-logo"
-        style="opacity: 0.65; transition: opacity var(--transition-fast)"
-        onmouseover="this.style.opacity = '1'"
-        onmouseout="this.style.opacity = '0.65'"
-        aria-label="AppsTrackr home"
-      >
-        <div
-          class="nav-logo-icon"
-          style="width: 28px; height: 28px"
-          aria-hidden="true"
-        >
-          <img
-            src="/static/images/logo-placeholder.svg"
-            alt=""
-            width="28"
-            height="28"
-          />
-        </div>
+      <a href="/" class="nav-logo" style="opacity:0.65;transition:opacity var(--transition-fast);" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.65'" aria-label="AppsTrackr home">
+        <div class="nav-logo-icon" style="width:28px;height:28px;" aria-hidden="true"><img src="/static/images/logo-placeholder.svg" alt="" width="28" height="28"/></div>
         AppsTrackr
       </a>
       <p class="footer-copy">&copy; 2026 AppsTrackr. Built with precision.</p>
       <nav class="footer-links" aria-label="Footer links">
         <a href="/login" class="footer-link">Login</a>
         <a href="/register" class="footer-link">Register</a>
-        <a
-          href="https://github.com/PatzerZach/Job-Application-Tracker"
-          class="footer-link"
-          target="_blank"
-          rel="noreferrer"
-          >GitHub</a
-        >
-        <a
-          href="https://www.geoapify.com/"
-          class="footer-link"
-          target="_blank"
-          rel="noreferrer"
-          >Geoapify</a
-        >
+        <a href="https://github.com/PatzerZach/Job-Application-Tracker" class="footer-link" target="_blank" rel="noreferrer">GitHub</a>
+        <a href="https://www.geoapify.com/" class="footer-link" target="_blank" rel="noreferrer">Geoapify</a>
       </nav>
     </div>
   </div>
