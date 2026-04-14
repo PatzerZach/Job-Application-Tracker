@@ -38,8 +38,24 @@
 
     <div class="auth-header">
       <h1 class="auth-title">Welcome back</h1>
-      <p class="auth-subtitle">Sign in to your career command center</p>
+      <p class="auth-subtitle">Sign in with your username or email</p>
     </div>
+
+    {% if success %}
+    <div class="alert alert-success" role="alert" data-auto-dismiss data-auto-dismiss-ms="11000">
+      <svg class="alert-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd"/></svg>
+      <span>{{ success }}</span>
+      <button class="alert-close" aria-label="Dismiss">x</button>
+    </div>
+    {% endif %}
+
+    {% if info %}
+    <div class="alert alert-info" role="alert" data-auto-dismiss data-auto-dismiss-ms="11000">
+      <svg class="alert-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M18 10A8 8 0 112 10a8 8 0 0116 0zm-8-3a1 1 0 100-2 1 1 0 000 2zm1 8a1 1 0 10-2 0 1 1 0 002 0V9a1 1 0 10-2 0v4z" clip-rule="evenodd"/></svg>
+      <span>{{ info }}</span>
+      <button class="alert-close" aria-label="Dismiss">x</button>
+    </div>
+    {% endif %}
 
     {% if error %}
     <div class="alert alert-error" role="alert" data-auto-dismiss>
@@ -51,13 +67,16 @@
 
     <form method="POST" action="/login" data-validate novalidate>
       <div class="form-group">
-        <label class="form-label" for="username">Username</label>
-        <input class="form-control" type="text" id="username" name="username" placeholder="your_username" value="{{ username or '' }}" required autocomplete="username" autofocus/>
-        <span class="form-error-text">Username is required.</span>
+        <label class="form-label" for="identifier">Username or Email</label>
+        <input class="form-control" type="text" id="identifier" name="identifier" placeholder="you@example.com or your_username" value="{{ identifier or '' }}" required autocomplete="username" autofocus/>
+        <span class="form-error-text">Enter your username or email.</span>
       </div>
 
       <div class="form-group">
-        <label class="form-label" for="password">Password</label>
+        <div class="auth-inline-heading">
+          <label class="form-label" for="password">Password</label>
+          <a href="/forgot-password" class="auth-inline-link">Forgot password?</a>
+        </div>
         <div style="position:relative;">
           <input class="form-control" type="password" id="password" name="password" placeholder="Password" required autocomplete="current-password" style="padding-right:46px;"/>
           <button type="button" id="toggle-pw" aria-label="Toggle password visibility" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--text-muted);padding:4px;display:flex;align-items:center;transition:color var(--transition-fast);">

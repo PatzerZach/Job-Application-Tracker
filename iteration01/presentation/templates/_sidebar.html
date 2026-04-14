@@ -1,4 +1,4 @@
-{# Expects: active_page ('applications'|'resumes'|'cover_letters') #}
+{# Expects: active_page ('applications'|'resumes'|'cover_letters'|'profile') #}
 {% set display_username = request.cookies.get("username", "User") %}
 {% set avatar_letter = (display_username[:1] if display_username else "U") | upper %}
 <div class="app-bg-grid" aria-hidden="true"></div>
@@ -39,14 +39,14 @@
   </nav>
 
   <div class="sidebar-footer">
-    <div class="sidebar-user" role="button" tabindex="0" aria-label="User account">
+    <a href="/profile" class="sidebar-user {% if active_page == 'profile' %}is-active{% endif %}" aria-label="Open profile">
       <div class="sidebar-avatar" aria-hidden="true">{{ avatar_letter }}</div>
       <div class="sidebar-user-info" style="min-width:0;">
         <div class="sidebar-user-name">{{ display_username }}</div>
         <div class="sidebar-user-role">Free Plan</div>
       </div>
       <div class="sidebar-status-dot" aria-label="Online" title="Online"></div>
-    </div>
+    </a>
 
     <button class="theme-toggle" aria-label="Toggle theme">
       <svg class="icon-sun" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><circle cx="10" cy="10" r="4"/><path d="M10 2v2M10 16v2M2 10h2M16 10h2"/></svg>

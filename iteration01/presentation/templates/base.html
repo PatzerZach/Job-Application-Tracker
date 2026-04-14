@@ -24,6 +24,18 @@
 <body>
 <canvas id="particles-canvas" aria-hidden="true"></canvas>
 
+{% if request.cookies.get("user_id") and request.cookies.get("is_verified") == "false" and request.url.path not in ["/login", "/register", "/forgot-password", "/reset-password"] %}
+<div class="verification-banner" role="status">
+  <div class="verification-banner-inner">
+    <div class="verification-banner-copy">
+      <strong>Verify your email to fully secure your account.</strong>
+      <span>Your AppsTrackr email is still unverified. Visit your profile to resend the verification link.</span>
+    </div>
+    <a href="/profile" class="btn btn-primary btn-sm">Open Profile</a>
+  </div>
+</div>
+{% endif %}
+
 {% block body %}{% endblock %}
 
 <div class="modal-overlay" id="confirm-modal" role="dialog" aria-modal="true" aria-labelledby="confirm-modal-title">

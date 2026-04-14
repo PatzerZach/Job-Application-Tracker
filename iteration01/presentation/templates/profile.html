@@ -1,0 +1,215 @@
+{% extends "base.html" %}
+{% block title %}My Profile{% endblock %}
+{% set active_page = 'profile' %}
+
+{% block body %}
+<div id="scroll-progress" aria-hidden="true"></div>
+<div id="cursor-dot" aria-hidden="true"></div>
+<div id="cursor-ring" aria-hidden="true"></div>
+
+<div class="app-layout">
+  {% include '_sidebar.html' %}
+
+  <main class="app-main" id="main-content">
+    <header class="app-topbar">
+      <button class="mobile-menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="sidebar">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5A.75.75 0 012 10z" clip-rule="evenodd"/></svg>
+      </button>
+      <div class="topbar-breadcrumb">
+        <span>AppsTrackr</span>
+        <span class="topbar-breadcrumb-sep">/</span>
+        <span class="topbar-breadcrumb-current">Profile</span>
+      </div>
+    </header>
+
+    <div class="page-content">
+      {% if success %}
+      <div class="alert alert-success" role="alert" data-auto-dismiss>
+        <svg class="alert-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd"/></svg>
+        <span>{{ success }}</span>
+        <button class="alert-close" aria-label="Dismiss">x</button>
+      </div>
+      {% endif %}
+
+      {% if info %}
+      <div class="alert alert-info" role="alert" data-auto-dismiss>
+        <svg class="alert-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M18 10A8 8 0 112 10a8 8 0 0116 0zm-8-3a1 1 0 100-2 1 1 0 000 2zm1 8a1 1 0 10-2 0 1 1 0 002 0V9a1 1 0 10-2 0v4z" clip-rule="evenodd"/></svg>
+        <span>{{ info }}</span>
+        <button class="alert-close" aria-label="Dismiss">x</button>
+      </div>
+      {% endif %}
+
+      {% if error %}
+      <div class="alert alert-error" role="alert" data-auto-dismiss>
+        <svg class="alert-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-5a.75.75 0 01.75.75v4.5a.75.75 0 01-1.5 0v-4.5A.75.75 0 0110 5zm0 10a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/></svg>
+        <span>{{ error }}</span>
+        <button class="alert-close" aria-label="Dismiss">x</button>
+      </div>
+      {% endif %}
+
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">My Profile</h1>
+          <p class="page-subtitle">Manage your email, password, and account verification.</p>
+        </div>
+      </div>
+
+      <div class="page-shell-narrow">
+        <div class="settings-grid">
+          <section class="settings-card tilt-card shimmer" data-reveal>
+            <div class="settings-card-header">
+              <div>
+                <h2 class="settings-card-title">Account Overview</h2>
+                <p class="settings-card-subtitle">Your core AppsTrackr identity.</p>
+              </div>
+              <span class="profile-verification-badge {% if user.is_verified %}is-verified{% else %}is-pending{% endif %}">
+                {% if user.is_verified %}Verified{% else %}Verification Pending{% endif %}
+              </span>
+            </div>
+
+            <div class="profile-summary">
+              <div class="profile-summary-item">
+                <span class="profile-summary-label">Full Name</span>
+                <strong>{{ user.name }}</strong>
+              </div>
+              <div class="profile-summary-item">
+                <span class="profile-summary-label">Username</span>
+                <strong>{{ user.username }}</strong>
+              </div>
+              <div class="profile-summary-item">
+                <span class="profile-summary-label">Email</span>
+                <strong>{{ user.email }}</strong>
+              </div>
+              <div class="profile-summary-item">
+                <span class="profile-summary-label">Verified</span>
+                <strong>{% if user.is_verified %}Yes{% else %}No{% endif %}</strong>
+              </div>
+            </div>
+
+            {% if not user.is_verified %}
+            <form method="POST" action="/profile/resend-verification">
+              <button type="submit" class="btn btn-primary magnetic-wrap">Resend Verification Email</button>
+            </form>
+            {% endif %}
+          </section>
+
+          <section class="settings-card tilt-card shimmer" data-reveal data-reveal-delay="1">
+            <div class="settings-card-header">
+              <div>
+                <h2 class="settings-card-title">Change Email</h2>
+                <p class="settings-card-subtitle">Switch to a new address and verify it with one click.</p>
+              </div>
+            </div>
+
+            {% if email_error %}
+            <div class="alert alert-error" role="alert">
+              <svg class="alert-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-5a.75.75 0 01.75.75v4.5a.75.75 0 01-1.5 0v-4.5A.75.75 0 0110 5zm0 10a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/></svg>
+              <span>{{ email_error }}</span>
+            </div>
+            {% endif %}
+
+            <form method="POST" action="/profile/email" data-validate novalidate>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="email">New Email</label>
+                  <input class="form-control" type="email" id="email" name="email" value="{{ email_value if email_value is not none else '' }}" required autocomplete="email" data-email-strict="true" data-error-email="Enter a valid email address."/>
+                  <span class="form-error-text">A valid email is required.</span>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="confirm_email">Confirm New Email</label>
+                  <input class="form-control" type="email" id="confirm_email" name="confirm_email" value="{{ confirm_email_value if confirm_email_value is not none else '' }}" required autocomplete="email" data-email-strict="true" data-match="#email" data-error-email="Enter a valid email address." data-error-match="Email addresses must match."/>
+                  <span class="form-error-text">Please confirm your new email.</span>
+                </div>
+              </div>
+
+              <div class="form-actions-row">
+                <button type="submit" class="btn btn-primary magnetic-wrap">Update Email</button>
+              </div>
+            </form>
+          </section>
+
+          <section class="settings-card tilt-card shimmer" data-reveal data-reveal-delay="2">
+            <div class="settings-card-header">
+              <div>
+                <h2 class="settings-card-title">Change Password</h2>
+                <p class="settings-card-subtitle">Use your current password to choose a new secure one.</p>
+              </div>
+            </div>
+
+            {% if password_error %}
+            <div class="alert alert-error" role="alert">
+              <svg class="alert-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-5a.75.75 0 01.75.75v4.5a.75.75 0 01-1.5 0v-4.5A.75.75 0 0110 5zm0 10a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/></svg>
+              <span>{{ password_error }}</span>
+            </div>
+            {% endif %}
+
+            <form method="POST" action="/profile/password" data-validate novalidate autocomplete="off">
+              <input class="auth-stealth-field" type="text" name="profile_username_decoy" autocomplete="username" tabindex="-1" aria-hidden="true"/>
+              <input class="auth-stealth-field" type="password" name="profile_password_decoy" autocomplete="current-password" tabindex="-1" aria-hidden="true"/>
+              <div class="form-group">
+                <label class="form-label" for="current_password">Current Password</label>
+                <input class="form-control" type="password" id="current_password" name="current_password" placeholder="Enter your existing password" required autocomplete="off" data-lpignore="true" data-1p-ignore="true" spellcheck="false"/>
+                <span class="form-error-text">Enter your existing password.</span>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="new_password">New Password</label>
+                  <input class="form-control" type="password" id="new_password" name="new_password" placeholder="New password" required minlength="8" autocomplete="new-password" data-error-minlength="Password must be at least 8 characters."/>
+                  <span class="form-error-text">Password must be at least 8 characters.</span>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="confirm_password">Confirm New Password</label>
+                  <input class="form-control" type="password" id="confirm_password" name="confirm_password" placeholder="Confirm new password" required minlength="8" autocomplete="new-password" data-match="#new_password" data-error-minlength="Password must be at least 8 characters." data-error-match="Passwords must match."/>
+                  <span class="form-error-text">Please confirm your new password.</span>
+                </div>
+              </div>
+
+              <div class="form-actions-row">
+                <button type="submit" class="btn btn-primary magnetic-wrap">Update Password</button>
+              </div>
+            </form>
+          </section>
+
+          <section class="settings-card settings-card-danger tilt-card shimmer" data-reveal data-reveal-delay="3">
+            <div class="settings-card-header">
+              <div>
+                <h2 class="settings-card-title">Delete Account</h2>
+                <p class="settings-card-subtitle">This permanently removes your AppsTrackr account, applications, resumes, and cover letters.</p>
+              </div>
+            </div>
+
+            <div class="danger-copy">
+              <strong>This action cannot be undone.</strong>
+              <span>Enter your current password, then confirm the deletion. We will also sign you out immediately.</span>
+            </div>
+
+            {% if delete_error %}
+            <div class="alert alert-error" role="alert">
+              <svg class="alert-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-5a.75.75 0 01.75.75v4.5a.75.75 0 01-1.5 0v-4.5A.75.75 0 0110 5zm0 10a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/></svg>
+              <span>{{ delete_error }}</span>
+            </div>
+            {% endif %}
+
+            <form method="POST" action="/profile/delete" data-validate novalidate autocomplete="off">
+              <input class="auth-stealth-field" type="text" name="profile_delete_username_decoy" autocomplete="username" tabindex="-1" aria-hidden="true"/>
+              <input class="auth-stealth-field" type="password" name="profile_delete_password_decoy" autocomplete="current-password" tabindex="-1" aria-hidden="true"/>
+              <div class="form-group">
+                <label class="form-label" for="delete_current_password">Current Password</label>
+                <input class="form-control" type="password" id="delete_current_password" name="current_password" placeholder="Enter your existing password" required autocomplete="off" data-lpignore="true" data-1p-ignore="true" spellcheck="false"/>
+                <span class="form-error-text">Enter your current password to continue.</span>
+              </div>
+
+              <div class="form-actions-row">
+                <button type="submit" class="btn btn-danger magnetic-wrap" data-confirm="Delete your AppsTrackr account forever? This will permanently remove your applications and stored documents.">Delete Account</button>
+              </div>
+            </form>
+          </section>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+{% endblock %}

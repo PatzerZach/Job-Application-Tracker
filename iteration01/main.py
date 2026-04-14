@@ -56,7 +56,12 @@ def build_app():
     storage_service = build_storage_service()
 
     # Services
-    auth_service = AuthService(db_url)
+    auth_service = AuthService(
+        db_url,
+        resend_api_key=os.getenv("RESEND_API_KEY"),
+        email_from=os.getenv("EMAIL_FROM"),
+        storage_service=storage_service
+    )
     application_service = ApplicationService(db_url)
     resume_service = ResumeService(db_url, storage_service)
     cover_letter_service = CoverLetterService(db_url, storage_service)

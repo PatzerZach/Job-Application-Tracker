@@ -24,7 +24,7 @@
 </div>
 
 <div class="auth-page" style="padding:36px var(--space-4);">
-  <div class="auth-card tilt-card" style="max-width:460px;">
+  <div class="auth-card tilt-card" style="max-width:500px;">
     <div aria-hidden="true" style="position:absolute;top:0;left:15%;right:15%;height:1px;background:linear-gradient(90deg,transparent,var(--accent-glow),transparent);"></div>
 
     <div class="auth-logo">
@@ -38,8 +38,16 @@
 
     <div class="auth-header">
       <h1 class="auth-title">Create your account</h1>
-      <p class="auth-subtitle">Start organizing your job search today</p>
+      <p class="auth-subtitle">We’ll send a verification email to activate secure recovery.</p>
     </div>
+
+    {% if success %}
+    <div class="alert alert-success" role="alert" data-auto-dismiss>
+      <svg class="alert-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd"/></svg>
+      <span>{{ success }}</span>
+      <button class="alert-close" aria-label="Dismiss">x</button>
+    </div>
+    {% endif %}
 
     {% if error %}
     <div class="alert alert-error" role="alert" data-auto-dismiss>
@@ -53,26 +61,34 @@
       <div class="form-group">
         <label class="form-label" for="name">Full Name <span style="color:var(--danger);" aria-label="required">*</span></label>
         <input class="form-control" type="text" id="name" name="name" placeholder="Alex Johnson" value="{{ name or '' }}" required autocomplete="name" autofocus/>
-        <span class="form-error-text">Required.</span>
+        <span class="form-error-text">Please enter your full name.</span>
       </div>
 
       <div class="form-group">
         <label class="form-label" for="username">Username <span style="color:var(--danger);" aria-label="required">*</span></label>
-        <input class="form-control" type="text" id="username" name="username" placeholder="alexjohnson" value="{{ username or '' }}" required autocomplete="username" pattern="[a-zA-Z0-9_\-]{3,32}"/>
-        <span class="form-hint">3-32 chars · letters, numbers, _ and - only</span>
+        <input class="form-control" type="text" id="username" name="username" placeholder="alexjohnson" value="{{ username or '' }}" required autocomplete="username" pattern="[a-zA-Z0-9_\-]{3,32}" data-error-pattern="Use 3-32 letters, numbers, underscores, or hyphens only."/>
+        <span class="form-hint">3-32 chars, letters/numbers/_/- only</span>
         <span class="form-error-text">Username is required.</span>
       </div>
 
-      <div class="form-group">
-        <label class="form-label" for="email">Email <span style="color:var(--danger);" aria-label="required">*</span></label>
-        <input class="form-control" type="email" id="email" name="email" placeholder="alex@example.com" value="{{ email or '' }}" required autocomplete="email"/>
-        <span class="form-error-text">A valid email is required.</span>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="email">Email <span style="color:var(--danger);" aria-label="required">*</span></label>
+          <input class="form-control" type="email" id="email" name="email" placeholder="alex@example.com" value="{{ email or '' }}" required autocomplete="email" data-email-strict="true" data-error-email="Enter a valid email address."/>
+          <span class="form-error-text">A valid email is required.</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="confirm_email">Confirm Email <span style="color:var(--danger);" aria-label="required">*</span></label>
+          <input class="form-control" type="email" id="confirm_email" name="confirm_email" placeholder="alex@example.com" value="{{ confirm_email or '' }}" required autocomplete="email" data-email-strict="true" data-match="#email" data-error-email="Enter a valid email address." data-error-match="Email addresses must match."/>
+          <span class="form-error-text">Please confirm your email.</span>
+        </div>
       </div>
 
       <div class="form-group">
         <label class="form-label" for="password">Password <span style="color:var(--danger);" aria-label="required">*</span></label>
         <div style="position:relative;">
-          <input class="form-control" type="password" id="password" name="password" placeholder="Password" required autocomplete="new-password" minlength="8" style="padding-right:46px;"/>
+          <input class="form-control" type="password" id="password" name="password" placeholder="Password" required autocomplete="new-password" minlength="8" data-error-minlength="Password must be at least 8 characters." style="padding-right:46px;"/>
           <button type="button" id="toggle-pw" aria-label="Toggle password visibility" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--text-muted);padding:4px;display:flex;align-items:center;transition:color var(--transition-fast);">
             <svg viewBox="0 0 20 20" fill="currentColor" width="17" height="17"><path d="M10 12.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z"/><path fill-rule="evenodd" d="M.664 10.59a1.651 1.651 0 010-1.186A10.004 10.004 0 0110 3c4.257 0 7.893 2.66 9.336 6.41.147.381.146.804 0 1.186A10.004 10.004 0 0110 17c-4.257 0-7.893-2.66-9.336-6.41zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/></svg>
           </button>
